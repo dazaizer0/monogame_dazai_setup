@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ino.Classes;
 using System;
+using System.Diagnostics;
 
 namespace ino
 {
@@ -13,7 +14,10 @@ namespace ino
         private SpriteBatch spriteBatch;
 
         private static Texture2D player_texture;
-        Player player = new Player("player", 100, new Vector2(0, 0), player_texture);
+        Classes.Player player = new Classes.Player("player", 100f, new Vector2(0, 0), player_texture);
+
+        private static Texture2D object_texture;
+        Classes.Object object1 = new Classes.Object("object1", new Vector2(200, 200), object_texture);
         #endregion
 
         #region SETUP
@@ -29,8 +33,6 @@ namespace ino
         protected override void Initialize()
         {
             player.playerPosition = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
-            player.playerSpeed = 100f;
-
             base.Initialize();
         }
         #endregion
@@ -41,6 +43,7 @@ namespace ino
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player.playerTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
+            object1.objectTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
         }
         #endregion
 
@@ -95,6 +98,16 @@ namespace ino
             {
                 player.playerPosition.Y = player.playerTexture.Height / 2;
             }
+
+            // PLAYER COLLISIONS WITH OBJECT1
+            Rectangle rect1 = new Rectangle((int)player.playerPosition.X, (int)player.playerPosition.Y, (int)player.playerTexture.Width, (int)player.playerTexture.Height);
+            Rectangle rect2 = new Rectangle((int)object1.objectPosition.X, (int)object1.objectPosition.Y, (int)object1.objectTexture.Width, (int)object1.objectTexture.Height);
+            if (rect1.Intersects(rect2) == true)
+            {
+                Vector2 moveDirection = object1.objectPosition - player.playerPosition;
+                moveDirection.Normalize();
+                player.playerPosition -= moveDirection * player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             #endregion
 
             base.Update(gameTime);
@@ -111,6 +124,7 @@ namespace ino
             #region SPRITE_BATCH_DRAWING
             spriteBatch.Begin();
             spriteBatch.Draw(player.playerTexture, player.playerPosition, Color.White); // DRAW PLAYER
+            spriteBatch.Draw(object1.objectTexture, object1.objectPosition, Color.White); // DRAW OBJECT1
             spriteBatch.End();
             #endregion
 
