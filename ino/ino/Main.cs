@@ -56,6 +56,9 @@ namespace ino
 
             // PLAYER MOVEMENT
             #region PLAYER_MOVEMENT
+            Vector2 moveDirection = object1.objectPosition - player.playerPosition;
+            moveDirection.Normalize();
+
             var keyboard_state = Keyboard.GetState();
 
             if (keyboard_state.IsKeyDown(Keys.Up))
@@ -102,8 +105,6 @@ namespace ino
             // PLAYER COLLISIONS WITH OBJECT1
             if (player.Collision(player, object1) == true)
             {
-                Vector2 moveDirection = object1.objectPosition - player.playerPosition;
-                moveDirection.Normalize();
                 player.playerPosition -= moveDirection * player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             #endregion
@@ -121,8 +122,10 @@ namespace ino
             // DRAW
             #region SPRITE_BATCH_DRAWING
             spriteBatch.Begin();
+
             spriteBatch.Draw(player.playerTexture, player.playerPosition, Color.White); // DRAW PLAYER
             spriteBatch.Draw(object1.objectTexture, object1.objectPosition, Color.White); // DRAW OBJECT1
+
             spriteBatch.End();
             #endregion
 
