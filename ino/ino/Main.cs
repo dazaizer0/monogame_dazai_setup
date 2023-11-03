@@ -100,9 +100,7 @@ namespace ino
             }
 
             // PLAYER COLLISIONS WITH OBJECT1
-            Rectangle rect1 = new Rectangle((int)player.playerPosition.X, (int)player.playerPosition.Y, (int)player.playerTexture.Width, (int)player.playerTexture.Height);
-            Rectangle rect2 = new Rectangle((int)object1.objectPosition.X, (int)object1.objectPosition.Y, (int)object1.objectTexture.Width, (int)object1.objectTexture.Height);
-            if (rect1.Intersects(rect2) == true)
+            if (player.Collision(player, object1) == true)
             {
                 Vector2 moveDirection = object1.objectPosition - player.playerPosition;
                 moveDirection.Normalize();
