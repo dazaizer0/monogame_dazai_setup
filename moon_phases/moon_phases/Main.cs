@@ -33,7 +33,7 @@ namespace moon_phases
         #region INITIALIZE
         protected override void Initialize()
         {
-            Window.Title = "Moon phases";
+            Window.Title = "Moon Phases";
             player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
             base.Initialize();
         }
@@ -132,7 +132,7 @@ namespace moon_phases
             spriteBatch.Draw(player_object.Texture, player_object.Position, Color.White); // DRAW PLAYER
             spriteBatch.Draw(primary_object_1.Texture, primary_object_1.Position, Color.White); // DRAW OBJECT1
 
-            spriteBatch.DrawString(arial, "TestTestTest", new Vector2(20, 20), Color.White);
+            spriteBatch.DrawString(arial, "Moon Phases", new Vector2(20, 20), Color.White);
             spriteBatch.End();
             #endregion
 
