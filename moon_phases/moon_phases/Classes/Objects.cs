@@ -10,19 +10,24 @@ using System.Threading.Tasks;
 namespace moon_phases.Classes
 {
     #region NEW OBJECT
-    internal class Object
+    struct GLobalVariables
+    {
+        public Vector2 GlobalZeroPosition;
+    }
+
+    internal class Node
     {
         public string Name;
         public Vector2 Position;
 
-        public Object(string name, Vector2 position)
+        public Node(string name, Vector2 position)
         {
             Name = name;
             Position = position;
         }
     }
 
-    internal class PrimaryObject : Object
+    internal class PrimaryObject : Node
     {
         public Texture2D Texture;
 
@@ -50,9 +55,45 @@ namespace moon_phases.Classes
         }
     }
 
-    internal class Camera
+    internal class Camera : Node
     {
+        public Matrix Transform { get; private set; }
+        private Viewport Viewport;
+        private float Zoom;
 
+        public Camera(string name, Viewport viewport, Vector2 position, float zoom) : base(name, position)
+        {
+            Viewport = viewport;
+            Zoom = zoom;
+        }
+
+        public void Refresh(Vector2 playerPosition)
+        {
+            Position = new Vector2(playerPosition.X - Viewport.Width / 2, playerPosition.Y - Viewport.Height / 2);
+
+            Transform = Matrix.CreateTranslation(new Vector3(-Position, 0)) *
+                        Matrix.CreateScale(Zoom, Zoom, 1) *
+                        Matrix.CreateTranslation(new Vector3(Viewport.Width / 2, Viewport.Height / 2, 0));
+        }
+    }
+
+    class TextNode : Node
+    {
+        string Text;
+        Color TextColor;
+        SpriteFont Font;
+
+        public TextNode(string name, string text, Color textColor, Vector2 position, SpriteFont font) : base(name, position)
+        {
+            Text = text;
+            TextColor = textColor;
+            Font = font;
+        }
+
+        public void Refresh(Vector2 global_zero_positon)
+        {
+            this.Position = global_zero_positon + this.Position;
+        }
     }
     #endregion
 }

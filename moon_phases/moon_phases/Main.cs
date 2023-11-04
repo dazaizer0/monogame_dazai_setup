@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using moon_phases.Classes;
 
 namespace moon_phases
 {
@@ -8,9 +9,13 @@ namespace moon_phases
     {
         #region VARIABLES
         // ELEMENTARY
+        private GLobalVariables gLobal_variables;
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private SpriteFont arial;
+
+        // UI
+        Classes.TextNode textNode;
 
         // TEXTURES
         private static Texture2D player_texture;
@@ -19,6 +24,9 @@ namespace moon_phases
         // OBJECTS
         Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, 200f);
         Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture);
+
+        // CAMERA
+        Classes.Camera camera;
         #endregion
 
         #region SETUP
@@ -34,7 +42,11 @@ namespace moon_phases
         protected override void Initialize()
         {
             Window.Title = "Moon Phases";
+
             player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
+            camera = new Camera("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f); // CAMERA
+            gLobal_variables.GlobalZeroPosition = camera.Position; // GLOBAL 0 POSITION
+
             base.Initialize();
         }
         #endregion
@@ -59,6 +71,15 @@ namespace moon_phases
             // EXIT 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            #region UI
+
+            #endregion
+                
+            #region CAMERA
+            // CAMERA
+            camera.Refresh(new Vector2(player_object.Position.X + 410, player_object.Position.Y + 250));
+            #endregion
 
             // PLAYER MOVEMENT
             #region PLAYER_MOVEMENT
@@ -127,12 +148,13 @@ namespace moon_phases
 
             // DRAW
             #region SPRITE_BATCH_DRAWING
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: camera.Transform);
 
             spriteBatch.Draw(player_object.Texture, player_object.Position, Color.White); // DRAW PLAYER
             spriteBatch.Draw(primary_object_1.Texture, primary_object_1.Position, Color.White); // DRAW OBJECT1
 
-            spriteBatch.DrawString(arial, "Moon Phases", new Vector2(20, 20), Color.White);
+            spriteBatch.DrawString(arial, "Moon Phases", new Vector2(20, 20), Color.White); // TYPE TEXT
+
             spriteBatch.End();
             #endregion
 
