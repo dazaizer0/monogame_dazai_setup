@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/mydat/Documents/_cs/AzraelsDream/moon_phases/moon_phases/Content/fonts/prototype_font.spritefont","C:/Users/mydat/Documents/_cs/AzraelsDream/moon_phases/moon_phases/Content/bin/DesktopGL/fonts/prototype_font.xnb","FontDescriptionProcessor","SpriteFontContent",2065,70687,0,7891651
+"C:/Users/mydat/Documents/_cs/AzraelsDream/moon_phases/moon_phases/Content/textures/prototype.png","C:/Users/mydat/Documents/_cs/AzraelsDream/moon_phases/moon_phases/Content/bin/DesktopGL/textures/prototype.xnb","TextureProcessor","Texture2DContent",197,4181,0,0824006

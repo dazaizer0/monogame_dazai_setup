@@ -9,6 +9,7 @@ namespace moon_phases
         #region VARIABLES
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private SpriteFont arial;
 
         private static Texture2D player_texture;
         Classes.Player player = new Classes.Player("player", 100f, new Vector2(0, 0), player_texture);
@@ -29,6 +30,7 @@ namespace moon_phases
         #region INITIALIZE
         protected override void Initialize()
         {
+            Window.Title = "Moon phases";
             player.playerPosition = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
             base.Initialize();
         }
@@ -38,6 +40,7 @@ namespace moon_phases
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            arial = Content.Load<SpriteFont>("fonts/prototype_font");
 
             player.playerTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
             object1.objectTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
@@ -123,6 +126,7 @@ namespace moon_phases
             spriteBatch.Draw(player.playerTexture, player.playerPosition, Color.White); // DRAW PLAYER
             spriteBatch.Draw(object1.objectTexture, object1.objectPosition, Color.White); // DRAW OBJECT1
 
+            spriteBatch.DrawString(arial, "TestTestTest", new Vector2(20, 20), Color.White);
             spriteBatch.End();
             #endregion
 

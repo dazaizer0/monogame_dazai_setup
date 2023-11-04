@@ -24,3 +24,4 @@ C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6
 C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6.0\moon_phases.pdb
 C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6.0\moon_phases.genruntimeconfig.cache
 C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6.0\ref\moon_phases.dll
+C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\bin\Debug\net6.0\Content\fonts\prototype_font.xnb
