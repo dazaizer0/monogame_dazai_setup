@@ -7,15 +7,18 @@ namespace moon_phases
     public class Main : Game
     {
         #region VARIABLES
+        // ELEMENTARY
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private SpriteFont arial;
 
+        // TEXTURES
         private static Texture2D player_texture;
-        Classes.Player player = new Classes.Player("player", 100f, new Vector2(0, 0), player_texture);
-
         private static Texture2D object_texture;
-        Classes.Object object1 = new Classes.Object("object1", new Vector2(200, 200), object_texture);
+
+        // OBJECTS
+        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, 200f);
+        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture);
         #endregion
 
         #region SETUP
@@ -31,7 +34,7 @@ namespace moon_phases
         protected override void Initialize()
         {
             Window.Title = "Moon phases";
-            player.playerPosition = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
+            player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
             base.Initialize();
         }
         #endregion
@@ -40,10 +43,13 @@ namespace moon_phases
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            arial = Content.Load<SpriteFont>("fonts/prototype_font");
 
-            player.playerTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
-            object1.objectTexture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
+            // UI
+            arial = Content.Load<SpriteFont>("fonts/prototype_font"); // INITIALIZE TEXT
+
+            // GAME
+            player_object.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
+            primary_object_1.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
         }
         #endregion
 
@@ -56,56 +62,56 @@ namespace moon_phases
 
             // PLAYER MOVEMENT
             #region PLAYER_MOVEMENT
-            Vector2 moveDirection = object1.objectPosition - player.playerPosition;
+            Vector2 moveDirection = primary_object_1.Position - player_object.Position;
             moveDirection.Normalize();
 
             var keyboard_state = Keyboard.GetState();
 
             if (keyboard_state.IsKeyDown(Keys.Up))
             {
-                player.playerPosition.Y -= player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position.Y -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             if (keyboard_state.IsKeyDown(Keys.Down))
             {
-                player.playerPosition.Y += player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position.Y += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             if (keyboard_state.IsKeyDown(Keys.Right))
             {
-                player.playerPosition.X += player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position.X += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             if (keyboard_state.IsKeyDown(Keys.Left))
             {
-                player.playerPosition.X -= player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position.X -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             #endregion
 
             // PLAYER COLLISIONS
             #region PLAYER_COLLISIONS
-            if (player.playerPosition.X > graphics.PreferredBackBufferWidth - player.playerTexture.Width / 2)
+            if (player_object.Position.X > graphics.PreferredBackBufferWidth - player_object.Texture.Width / 2)
             {
-                player.playerPosition.X = graphics.PreferredBackBufferWidth - player.playerTexture.Width / 2;
+                player_object.Position.X = graphics.PreferredBackBufferWidth - player_object.Texture.Width / 2;
             }
-            else if (player.playerPosition.X < player.playerTexture.Width / 2)
+            else if (player_object.Position.X < player_object.Texture.Width / 2)
             {
-                player.playerPosition.X = player.playerTexture.Width / 2;
+                player_object.Position.X = player_object.Texture.Width / 2;
             }
 
-            if (player.playerPosition.Y > graphics.PreferredBackBufferHeight - player.playerTexture.Height / 2)
+            if (player_object.Position.Y > graphics.PreferredBackBufferHeight - player_object.Texture.Height / 2)
             {
-                player.playerPosition.Y = graphics.PreferredBackBufferHeight - player.playerTexture.Height / 2;
+                player_object.Position.Y = graphics.PreferredBackBufferHeight - player_object.Texture.Height / 2;
             }
-            else if (player.playerPosition.Y < player.playerTexture.Height / 2)
+            else if (player_object.Position.Y < player_object.Texture.Height / 2)
             {
-                player.playerPosition.Y = player.playerTexture.Height / 2;
+                player_object.Position.Y = player_object.Texture.Height / 2;
             }
 
             // PLAYER COLLISIONS WITH OBJECT1
-            if (player.Collision(player, object1) == true)
+            if (player_object.IfCollision(primary_object_1))
             {
-                player.playerPosition -= moveDirection * player.playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position -= moveDirection * player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             #endregion
 
@@ -123,8 +129,8 @@ namespace moon_phases
             #region SPRITE_BATCH_DRAWING
             spriteBatch.Begin();
 
-            spriteBatch.Draw(player.playerTexture, player.playerPosition, Color.White); // DRAW PLAYER
-            spriteBatch.Draw(object1.objectTexture, object1.objectPosition, Color.White); // DRAW OBJECT1
+            spriteBatch.Draw(player_object.Texture, player_object.Position, Color.White); // DRAW PLAYER
+            spriteBatch.Draw(primary_object_1.Texture, primary_object_1.Position, Color.White); // DRAW OBJECT1
 
             spriteBatch.DrawString(arial, "TestTestTest", new Vector2(20, 20), Color.White);
             spriteBatch.End();

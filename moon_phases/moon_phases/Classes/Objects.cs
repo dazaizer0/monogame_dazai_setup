@@ -9,44 +9,36 @@ using System.Threading.Tasks;
 
 namespace moon_phases.Classes
 {
-    #region OBJECT
-    internal class Object
+    #region NEW OBJECT
+    class PrimaryObject
     {
-        public string objectName;
+        public string Name;
 
-        public Vector2 objectPosition;
-        public Texture2D objectTexture;
+        public Vector2 Position;
+        public Texture2D Texture;
 
-        public Object(string name, Vector2 position, Texture2D texture)
+        public PrimaryObject(string name, Vector2 position, Texture2D texture)
         {
-            objectName = name;
-            objectPosition = position;
-            objectTexture = texture;
+            Name = name;
+            Position = position;
+            Texture = texture;
         }
     }
-    #endregion
 
-    #region PLAYER
-    internal class Player
+    internal class PlayerObject : PrimaryObject
     {
-        public string playerName;
-        public float playerSpeed;
+        public float Speed;
 
-        public Vector2 playerPosition;
-        public Texture2D playerTexture;
-
-        public Player(string name, float speed, Vector2 position, Texture2D texture)
+        public PlayerObject(string name, Vector2 position, Texture2D texture, float speed) : base(name, position, texture)
         {
-            playerName = name;
-            playerSpeed = speed;
-            playerPosition = position;
-            playerTexture = texture;
+            this.Speed = speed;
         }
 
-        public bool Collision(Player player, Object object1)
+        public bool IfCollision(PrimaryObject object1)
         {
-            Rectangle rect1 = new Rectangle((int)player.playerPosition.X, (int)player.playerPosition.Y, (int)player.playerTexture.Width, (int)player.playerTexture.Height);
-            Rectangle rect2 = new Rectangle((int)object1.objectPosition.X, (int)object1.objectPosition.Y, (int)object1.objectTexture.Width, (int)object1.objectTexture.Height);
+            Rectangle rect1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)this.Texture.Width, (int)this.Texture.Height);
+            Rectangle rect2 = new Rectangle((int)object1.Position.X, (int)object1.Position.Y, (int)object1.Texture.Width, (int)object1.Texture.Height);
+
             return (rect1.Intersects(rect2) == true);
         }
     }
