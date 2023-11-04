@@ -10,17 +10,24 @@ using System.Threading.Tasks;
 namespace moon_phases.Classes
 {
     #region NEW OBJECT
-    class PrimaryObject
+    internal class Object
     {
         public string Name;
-
         public Vector2 Position;
-        public Texture2D Texture;
 
-        public PrimaryObject(string name, Vector2 position, Texture2D texture)
+        public Object(string name, Vector2 position)
         {
             Name = name;
             Position = position;
+        }
+    }
+
+    internal class PrimaryObject : Object
+    {
+        public Texture2D Texture;
+
+        public PrimaryObject(string name, Vector2 position, Texture2D texture) : base(name, position)
+        {
             Texture = texture;
         }
     }
@@ -41,6 +48,11 @@ namespace moon_phases.Classes
 
             return (rect1.Intersects(rect2) == true);
         }
+    }
+
+    internal class Camera
+    {
+
     }
     #endregion
 }
