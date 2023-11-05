@@ -42,6 +42,9 @@ namespace moon_phases.Classes
     {
         public float Speed;
 
+
+        // ANIMATION
+
         public PlayerObject(string name, Vector2 position, Texture2D texture, Color object_color, float speed, bool enabled) : base(name, position, texture, object_color, enabled)
         {
             this.Speed = speed;

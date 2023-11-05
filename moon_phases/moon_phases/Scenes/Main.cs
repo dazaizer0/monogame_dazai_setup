@@ -6,7 +6,7 @@ using System;
 
 using moon_phases.Classes;
 
-namespace moon_phases
+namespace moon_phases.Scenes
 {
     public class Main : Game
     {
@@ -18,8 +18,8 @@ namespace moon_phases
         private GameSceneProperties scene_properties = new GameSceneProperties(32, 64);
 
         // UI
-        Classes.UserInterfacePanel user_interface_panel;
-        Classes.UiText text1;
+        UserInterfacePanel user_interface_panel;
+        UserInterfaceText text1;
 
         // TEXTURES
         private static Texture2D player_texture;
@@ -27,11 +27,11 @@ namespace moon_phases
         private Texture2D pixel_texture;
 
         // OBJECTS
-        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
-        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White, true);
+        PlayerObject player_object = new PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
+        PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White, true);
 
         // CAMERA
-        Classes.CameraObject camera;
+        CameraObject camera;
         #endregion
 
         #region SETUP
@@ -51,9 +51,9 @@ namespace moon_phases
 
             // INITIALIZE PLAYER PROPERTIES
             player_object.Position = new Vector2(
-                (int)((graphics.PreferredBackBufferWidth / 2) / scene_properties.GridSize) * scene_properties.GridSize,
-                (int)((graphics.PreferredBackBufferHeight / 2) / scene_properties.GridSize) * scene_properties.GridSize);
-            
+                graphics.PreferredBackBufferWidth / 2 / scene_properties.GridSize * scene_properties.GridSize,
+                graphics.PreferredBackBufferHeight / 2 / scene_properties.GridSize * scene_properties.GridSize);
+
             // PLAYER
             player_object.Position = new Vector2(player_object.Position.X + 96, player_object.Position.Y + 64);
 
@@ -63,12 +63,12 @@ namespace moon_phases
 
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
+            text1 = new UserInterfaceText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
 
             // OBJECTS
-            primary_object_1.Position = 
-                new Vector2(((int)(primary_object_1.Position.X / scene_properties.GridSize)) * scene_properties.GridSize,
-                ((int)(primary_object_1.Position.Y / scene_properties.GridSize)) * scene_properties.GridSize);
+            primary_object_1.Position =
+                new Vector2((int)(primary_object_1.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
+                (int)(primary_object_1.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
             base.Initialize();
         }
@@ -99,7 +99,7 @@ namespace moon_phases
                 Exit();
 
             // GLOBAL CENTER
-            gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X  - camera.CenterProperties.X, camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
+            gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X - camera.CenterProperties.X, camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
             user_interface_panel.Position = gLobal_variables.GlobalScreenCenter;
             #endregion
 
@@ -193,7 +193,7 @@ namespace moon_phases
             {
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
-                    bool isVisible = (x / scene_properties.GridSize) % 2 == 0 && (y / scene_properties.GridSize) % 2 == 0;
+                    bool isVisible = x / scene_properties.GridSize % 2 == 0 && y / scene_properties.GridSize % 2 == 0;
                     if (isVisible)
                     {
                         sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);

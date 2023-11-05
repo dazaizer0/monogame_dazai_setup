@@ -19,13 +19,13 @@ namespace moon_phases.Classes
         }
     }
 
-    internal class UiText : UserInterfacePanel
+    internal class UserInterfaceText : UserInterfacePanel
     {
         public string Text;
         public Color TextColor;
         public SpriteFont Font;
 
-        public UiText(string name, string text, Vector2 screen_center, Vector2 position, SpriteFont font, Color textColor, bool enabled) : base(name, position, screen_center, enabled)
+        public UserInterfaceText(string name, string text, Vector2 screen_center, Vector2 position, SpriteFont font, Color textColor, bool enabled) : base(name, position, screen_center, enabled)
         {
             Text = text;
             TextColor = textColor;
