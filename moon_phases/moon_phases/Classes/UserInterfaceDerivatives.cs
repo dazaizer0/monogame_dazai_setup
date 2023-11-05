@@ -16,7 +16,7 @@ namespace moon_phases.Classes
     {
         public Vector2 ScreenCenter;
 
-        public UserInterfacePanel(string name, Vector2 position, Vector2 screen_center) : base(name, position)
+        public UserInterfacePanel(string name, Vector2 position, Vector2 screen_center, bool enabled) : base(name, position, enabled)
         {
             ScreenCenter = screen_center;
         }
@@ -28,7 +28,7 @@ namespace moon_phases.Classes
         public Color TextColor;
         public SpriteFont Font;
 
-        public UiText(string name, string text, Vector2 screen_center, Vector2 position, SpriteFont font, Color textColor) : base(name, position, screen_center)
+        public UiText(string name, string text, Vector2 screen_center, Vector2 position, SpriteFont font, Color textColor, bool enabled) : base(name, position, screen_center, enabled)
         {
             Text = text;
             TextColor = textColor;

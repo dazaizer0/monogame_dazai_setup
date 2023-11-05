@@ -9,10 +9,10 @@ namespace moon_phases
     {
         #region VARIABLES
         // ELEMENTARY
-        private GLobalVariables gLobal_variables;
+        private GLobalSceneVariables gLobal_variables;
         private GraphicsDeviceManager graphics;
         private SpriteBatch sprite_batch;
-        private GameScene game_scene = new GameScene(32, 64);
+        private GameSceneProperties scene_properties = new GameSceneProperties(32, 64);
 
         // UI
         Classes.UserInterfacePanel user_interface_panel;
@@ -24,8 +24,8 @@ namespace moon_phases
         private Texture2D pixel_texture;
 
         // OBJECTS
-        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f);
-        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White);
+        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
+        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White, true);
 
         // CAMERA
         Classes.CameraObject camera;
@@ -47,20 +47,25 @@ namespace moon_phases
             Window.Title = "Moon Phases";
 
             // INITIALIZE PLAYER PROPERTIES
-            player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+            player_object.Position = new Vector2(
+                (int)((graphics.PreferredBackBufferWidth / 2) / scene_properties.GridSize) * scene_properties.GridSize,
+                (int)((graphics.PreferredBackBufferHeight / 2) / scene_properties.GridSize) * scene_properties.GridSize);
+            
+            // PLAYER
+            player_object.Position = new Vector2(player_object.Position.X + 96, player_object.Position.Y + 64);
 
             // CAMERA
-            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f);
+            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f, true);
             camera.CenterProperties = new Vector2(410, 250);
 
             // UI
-            user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
-            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black);
+            user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
+            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
 
             // OBJECTS
             primary_object_1.Position = 
-                new Vector2(((int)(primary_object_1.Position.X / game_scene.GridSize)) * game_scene.GridSize,
-                ((int)(primary_object_1.Position.Y / game_scene.GridSize)) * game_scene.GridSize);
+                new Vector2(((int)(primary_object_1.Position.X / scene_properties.GridSize)) * scene_properties.GridSize,
+                ((int)(primary_object_1.Position.Y / scene_properties.GridSize)) * scene_properties.GridSize);
 
             base.Initialize();
         }
@@ -69,6 +74,7 @@ namespace moon_phases
         #region LOAD_CONTETNT
         protected override void LoadContent()
         {
+            // SPRITE BATCH
             sprite_batch = new SpriteBatch(GraphicsDevice);
 
             // GAME
@@ -95,12 +101,10 @@ namespace moon_phases
             #endregion
 
             #region UI
-            // UI
             text1.RefreshPosition(new Vector2(0, 0), user_interface_panel.Position);
             #endregion
 
             #region CAMERA
-            // CAMERA
             camera.Refresh(new Vector2(player_object.Position.X + camera.CenterProperties.X, player_object.Position.Y + camera.CenterProperties.Y));
             #endregion
 
@@ -110,7 +114,7 @@ namespace moon_phases
             if (mouse_state.LeftButton == ButtonState.Pressed)
             {
                 gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
-                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / game_scene.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / game_scene.GridSize}";
+                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
             }
 
             // PLAYER MOVEMENT
@@ -182,26 +186,28 @@ namespace moon_phases
             sprite_batch.Begin(transformMatrix: camera.Transform);
 
             #region WORLD 
-            // WORLD
-            for (int x = 0; x < game_scene.GridSize * 32; x += game_scene.GridSize)
+            for (int x = 0; x < scene_properties.GridSize * 32; x += scene_properties.GridSize)
             {
-                for (int y = 0; y < game_scene.GridSize * 24; y += game_scene.GridSize)
+                for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
-                    bool isVisible = (x / game_scene.GridSize) % 2 == 0 && (y / game_scene.GridSize) % 2 == 0;
+                    bool isVisible = (x / scene_properties.GridSize) % 2 == 0 && (y / scene_properties.GridSize) % 2 == 0;
                     if (isVisible)
                     {
-                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, game_scene.GridSize, game_scene.GridSize), Color.White);
+                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
                     }
                 }
             }
             #endregion
 
             // GAME OBJECTS
-            player_object.DrawIt(sprite_batch);
-            primary_object_1.DrawIt(sprite_batch);
+            if (player_object.Enabled)
+                player_object.DrawIt(sprite_batch);
+            if (primary_object_1.Enabled)
+                primary_object_1.DrawIt(sprite_batch);
 
             // UI
-            text1.TypeIt(sprite_batch);
+            if (text1.Enabled)
+                text1.TypeIt(sprite_batch);
 
             sprite_batch.End();
             #endregion

@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace moon_phases.Classes
 {
-    struct GLobalVariables
+    struct GLobalSceneVariables
     {
         public Vector2 GlobalScreenCenter;
         public Vector2 MouseClickPosition;
     }
 
-    class GameScene
+    class GameSceneProperties
     {
         public int GridSize;
         public int MapSize;
 
-        public GameScene(int grid_size, int map_size) 
+        public GameSceneProperties(int grid_size, int map_size) 
         {
             GridSize = grid_size; 
             MapSize = map_size;

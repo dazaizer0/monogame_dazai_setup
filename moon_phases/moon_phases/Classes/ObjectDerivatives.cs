@@ -14,11 +14,13 @@ namespace moon_phases.Classes
     {
         public string Name;
         public Vector2 Position;
+        public bool Enabled;
 
-        public Object(string name, Vector2 position)
+        public Object(string name, Vector2 position, bool enabled)
         {
             Name = name;
             Position = position;
+            Enabled = enabled;
         }
     }
 
@@ -27,7 +29,7 @@ namespace moon_phases.Classes
         public Texture2D Texture;
         public Color ObjectColor;
 
-        public PrimaryObject(string name, Vector2 position, Texture2D texture, Color object_color) : base(name, position)
+        public PrimaryObject(string name, Vector2 position, Texture2D texture, Color object_color, bool enabled) : base(name, position, enabled)
         {
             Texture = texture;
             ObjectColor = object_color;
@@ -43,7 +45,7 @@ namespace moon_phases.Classes
     {
         public float Speed;
 
-        public PlayerObject(string name, Vector2 position, Texture2D texture, Color object_color, float speed) : base(name, position, texture, object_color)
+        public PlayerObject(string name, Vector2 position, Texture2D texture, Color object_color, float speed, bool enabled) : base(name, position, texture, object_color, enabled)
         {
             this.Speed = speed;
         }
@@ -64,7 +66,7 @@ namespace moon_phases.Classes
         private Viewport Viewport;
         private float Zoom;
 
-        public CameraObject(string name, Viewport viewport, Vector2 position, float zoom) : base(name, position)
+        public CameraObject(string name, Viewport viewport, Vector2 position, float zoom, bool enabled) : base(name, position, enabled)
         {
             Viewport = viewport;
             Zoom = zoom;
