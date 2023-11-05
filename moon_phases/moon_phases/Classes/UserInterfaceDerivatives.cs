@@ -1,18 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using moon_phases.Classes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System;
+
 using static System.Net.Mime.MediaTypeNames;
 
 namespace moon_phases.Classes
 {
-    class UserInterfacePanel : Object
+    #region NEW UI OBJECT SYSTEM
+    internal class UserInterfacePanel : Object
     {
         public Vector2 ScreenCenter;
 
@@ -22,7 +19,7 @@ namespace moon_phases.Classes
         }
     }
 
-    class UiText : UserInterfacePanel
+    internal class UiText : UserInterfacePanel
     {
         public string Text;
         public Color TextColor;
@@ -45,4 +42,5 @@ namespace moon_phases.Classes
             sprite_batch.DrawString(this.Font, this.Text, this.Position, this.TextColor);
         }
     }
+    #endregion
 }

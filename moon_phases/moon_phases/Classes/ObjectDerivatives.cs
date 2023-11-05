@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace moon_phases.Classes
 {
-    #region NEW OBJECT
+    #region NEW OBJECT SYSTEM
     internal class Object
     {
         public string Name;

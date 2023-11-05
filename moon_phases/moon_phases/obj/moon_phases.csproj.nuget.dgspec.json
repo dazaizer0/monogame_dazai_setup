@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mydat\\Documents\\_cs\\AzraelsDream\\moon_phases\\moon_phases\\moon_phases.csproj": {}
+    "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\moon_phases.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mydat\\Documents\\_cs\\AzraelsDream\\moon_phases\\moon_phases\\moon_phases.csproj": {
+    "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\moon_phases.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mydat\\Documents\\_cs\\AzraelsDream\\moon_phases\\moon_phases\\moon_phases.csproj",
+        "projectUniqueName": "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\moon_phases.csproj",
         "projectName": "moon_phases",
-        "projectPath": "C:\\Users\\mydat\\Documents\\_cs\\AzraelsDream\\moon_phases\\moon_phases\\moon_phases.csproj",
+        "projectPath": "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\moon_phases.csproj",
         "packagesPath": "C:\\Users\\mydat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mydat\\Documents\\_cs\\AzraelsDream\\moon_phases\\moon_phases\\obj\\",
+        "outputPath": "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
