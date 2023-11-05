@@ -12,6 +12,7 @@ namespace moon_phases.Classes
     struct GLobalVariables
     {
         public Vector2 GlobalScreenCenter;
+        public Vector2 MouseClickPosition;
         public int GridSize;
     }
 

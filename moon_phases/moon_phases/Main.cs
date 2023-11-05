@@ -55,7 +55,7 @@ namespace moon_phases
 
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
-            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.White);
+            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black);
 
             base.Initialize();
         }
@@ -79,16 +79,19 @@ namespace moon_phases
         #region UPDATE
         protected override void Update(GameTime gameTime)
         {
+            #region ELEMENTARY_PROPERTIES
             // EXIT 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // GLOBAL CENTER
             gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X  - camera.CenterProperties.X, camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
+            user_interface_panel.Position = gLobal_variables.GlobalScreenCenter;
+            #endregion
 
-            // UI
             #region UI
-            text1.RefreshPosition(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
+            // UI
+            text1.RefreshPosition(new Vector2(0, 0), user_interface_panel.Position);
             #endregion
 
             #region CAMERA
@@ -96,36 +99,43 @@ namespace moon_phases
             camera.Refresh(new Vector2(player_object.Position.X + camera.CenterProperties.X, player_object.Position.Y + camera.CenterProperties.Y));
             #endregion
 
+            #region PLAYER_MANAGEMENT
+            // MOUSE CONTROLL
+            MouseState mouse_state = Mouse.GetState();
+            if (mouse_state.LeftButton == ButtonState.Pressed)
+            {
+                gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
+                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / gLobal_variables.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / gLobal_variables.GridSize}";
+            }
+
             // PLAYER MOVEMENT
-            #region PLAYER_MOVEMENT
             Vector2 moveDirection = primary_object_1.Position - player_object.Position;
             moveDirection.Normalize();
 
             var keyboard_state = Keyboard.GetState();
 
-            if (keyboard_state.IsKeyDown(Keys.Up))
+            if (keyboard_state.IsKeyDown(Keys.W))
             {
                 player_object.Position.Y -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (keyboard_state.IsKeyDown(Keys.Down))
+            if (keyboard_state.IsKeyDown(Keys.S))
             {
                 player_object.Position.Y += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (keyboard_state.IsKeyDown(Keys.Right))
+            if (keyboard_state.IsKeyDown(Keys.D))
             {
                 player_object.Position.X += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (keyboard_state.IsKeyDown(Keys.Left))
+            if (keyboard_state.IsKeyDown(Keys.A))
             {
                 player_object.Position.X -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            #endregion
 
-            // PLAYER COLLISIONS
             #region PLAYER_COLLISIONS
+            // PLAYER COLLISIONS
             if (player_object.Position.X > graphics.PreferredBackBufferWidth - player_object.Texture.Width / 2)
             {
                 player_object.Position.X = graphics.PreferredBackBufferWidth - player_object.Texture.Width / 2;
@@ -150,6 +160,7 @@ namespace moon_phases
                 player_object.Position -= moveDirection * player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             #endregion
+            #endregion
 
             base.Update(gameTime);
         }
@@ -161,19 +172,17 @@ namespace moon_phases
             // BACKGROUND DEFAULT COLOR
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // DRAW
             #region SPRITE_BATCH_DRAWING
+            // DRAW
             sprite_batch.Begin(transformMatrix: camera.Transform);
 
             #region WORLD 
             // WORLD
-            for (int x = 0; x < GraphicsDevice.Viewport.Width; x += gLobal_variables.GridSize)
+            for (int x = 0; x < gLobal_variables.GridSize * 16; x += gLobal_variables.GridSize)
             {
-                for (int y = 0; y < GraphicsDevice.Viewport.Height; y += gLobal_variables.GridSize)
+                for (int y = 0; y < gLobal_variables.GridSize * 16; y += gLobal_variables.GridSize)
                 {
-                    bool isVisible = (x / gLobal_variables.GridSize) % 2 == 0 || (x / gLobal_variables.GridSize) % 3 == 0 &&
-                        (y / gLobal_variables.GridSize) % 2 == 0 || (y / gLobal_variables.GridSize) % 3 == 0;
-
+                    bool isVisible = (x / gLobal_variables.GridSize) % 2 == 0 && (y / gLobal_variables.GridSize) % 2 == 0;
                     if (isVisible)
                     {
                         sprite_batch.Draw(pixel_texture, new Rectangle(x, y, gLobal_variables.GridSize, gLobal_variables.GridSize), Color.White);
