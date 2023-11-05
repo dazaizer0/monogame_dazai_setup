@@ -13,11 +13,17 @@ namespace moon_phases.Classes
     {
         public Vector2 GlobalScreenCenter;
         public Vector2 MouseClickPosition;
-        public int GridSize;
     }
 
-    internal class GameManager
+    class GameScene
     {
+        public int GridSize;
+        public int MapSize;
 
+        public GameScene(int grid_size, int map_size) 
+        {
+            GridSize = grid_size; 
+            MapSize = map_size;
+        }
     }
 }

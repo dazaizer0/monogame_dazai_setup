@@ -12,6 +12,7 @@ namespace moon_phases
         private GLobalVariables gLobal_variables;
         private GraphicsDeviceManager graphics;
         private SpriteBatch sprite_batch;
+        private GameScene game_scene = new GameScene(32, 64);
 
         // UI
         Classes.UserInterfacePanel user_interface_panel;
@@ -44,7 +45,6 @@ namespace moon_phases
         {
             // GAME PROPERTIES
             Window.Title = "Moon Phases";
-            gLobal_variables.GridSize = 32;
 
             // INITIALIZE PLAYER PROPERTIES
             player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
@@ -56,6 +56,11 @@ namespace moon_phases
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
             text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black);
+
+            // OBJECTS
+            primary_object_1.Position = 
+                new Vector2(((int)(primary_object_1.Position.X / game_scene.GridSize)) * game_scene.GridSize,
+                ((int)(primary_object_1.Position.Y / game_scene.GridSize)) * game_scene.GridSize);
 
             base.Initialize();
         }
@@ -72,7 +77,7 @@ namespace moon_phases
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
-            pixel_texture.SetData(new Color[] { Color.White });
+            pixel_texture.SetData(new Color[] { Color.LightPink });
         }
         #endregion
 
@@ -105,7 +110,7 @@ namespace moon_phases
             if (mouse_state.LeftButton == ButtonState.Pressed)
             {
                 gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
-                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / gLobal_variables.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / gLobal_variables.GridSize}";
+                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / game_scene.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / game_scene.GridSize}";
             }
 
             // PLAYER MOVEMENT
@@ -170,7 +175,7 @@ namespace moon_phases
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
 
             #region SPRITE_BATCH_DRAWING
             // DRAW
@@ -178,14 +183,14 @@ namespace moon_phases
 
             #region WORLD 
             // WORLD
-            for (int x = 0; x < gLobal_variables.GridSize * 16; x += gLobal_variables.GridSize)
+            for (int x = 0; x < game_scene.GridSize * 32; x += game_scene.GridSize)
             {
-                for (int y = 0; y < gLobal_variables.GridSize * 16; y += gLobal_variables.GridSize)
+                for (int y = 0; y < game_scene.GridSize * 24; y += game_scene.GridSize)
                 {
-                    bool isVisible = (x / gLobal_variables.GridSize) % 2 == 0 && (y / gLobal_variables.GridSize) % 2 == 0;
+                    bool isVisible = (x / game_scene.GridSize) % 2 == 0 && (y / game_scene.GridSize) % 2 == 0;
                     if (isVisible)
                     {
-                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, gLobal_variables.GridSize, gLobal_variables.GridSize), Color.White);
+                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, game_scene.GridSize, game_scene.GridSize), Color.White);
                     }
                 }
             }
