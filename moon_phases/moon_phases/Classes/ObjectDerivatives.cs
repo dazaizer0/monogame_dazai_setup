@@ -10,30 +10,32 @@ using System.Threading.Tasks;
 namespace moon_phases.Classes
 {
     #region NEW OBJECT
-    struct GLobalVariables
-    {
-        public Vector2 GlobalZeroPosition;
-    }
-
-    internal class Node
+    internal class Object
     {
         public string Name;
         public Vector2 Position;
 
-        public Node(string name, Vector2 position)
+        public Object(string name, Vector2 position)
         {
             Name = name;
             Position = position;
         }
     }
 
-    internal class PrimaryObject : Node
+    internal class PrimaryObject : Object
     {
         public Texture2D Texture;
+        public Color ObjectColor;
 
-        public PrimaryObject(string name, Vector2 position, Texture2D texture) : base(name, position)
+        public PrimaryObject(string name, Vector2 position, Texture2D texture, Color object_color) : base(name, position)
         {
             Texture = texture;
+            ObjectColor = object_color;
+        }
+
+        public void DrawIt(SpriteBatch sprite_batch)
+        {
+            sprite_batch.Draw(this.Texture, this.Position, this.ObjectColor);
         }
     }
 
@@ -41,7 +43,7 @@ namespace moon_phases.Classes
     {
         public float Speed;
 
-        public PlayerObject(string name, Vector2 position, Texture2D texture, float speed) : base(name, position, texture)
+        public PlayerObject(string name, Vector2 position, Texture2D texture, Color object_color, float speed) : base(name, position, texture, object_color)
         {
             this.Speed = speed;
         }
@@ -55,13 +57,14 @@ namespace moon_phases.Classes
         }
     }
 
-    internal class Camera : Node
+    internal class CameraObject : Object
     {
         public Matrix Transform { get; private set; }
+        public Vector2 CenterProperties;
         private Viewport Viewport;
         private float Zoom;
 
-        public Camera(string name, Viewport viewport, Vector2 position, float zoom) : base(name, position)
+        public CameraObject(string name, Viewport viewport, Vector2 position, float zoom) : base(name, position)
         {
             Viewport = viewport;
             Zoom = zoom;
@@ -74,25 +77,6 @@ namespace moon_phases.Classes
             Transform = Matrix.CreateTranslation(new Vector3(-Position, 0)) *
                         Matrix.CreateScale(Zoom, Zoom, 1) *
                         Matrix.CreateTranslation(new Vector3(Viewport.Width / 2, Viewport.Height / 2, 0));
-        }
-    }
-
-    class TextNode : Node
-    {
-        string Text;
-        Color TextColor;
-        SpriteFont Font;
-
-        public TextNode(string name, string text, Color textColor, Vector2 position, SpriteFont font) : base(name, position)
-        {
-            Text = text;
-            TextColor = textColor;
-            Font = font;
-        }
-
-        public void Refresh(Vector2 global_zero_positon)
-        {
-            this.Position = global_zero_positon + this.Position;
         }
     }
     #endregion

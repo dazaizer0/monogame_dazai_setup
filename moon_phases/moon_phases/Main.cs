@@ -11,22 +11,23 @@ namespace moon_phases
         // ELEMENTARY
         private GLobalVariables gLobal_variables;
         private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private SpriteFont arial;
+        private SpriteBatch sprite_batch;
 
         // UI
-        Classes.TextNode textNode;
+        Classes.UserInterfacePanel user_interface_panel;
+        Classes.UiText text1;
 
         // TEXTURES
         private static Texture2D player_texture;
         private static Texture2D object_texture;
+        private Texture2D pixel_texture;
 
         // OBJECTS
-        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, 200f);
-        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture);
+        Classes.PlayerObject player_object = new Classes.PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f);
+        Classes.PrimaryObject primary_object_1 = new Classes.PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White);
 
         // CAMERA
-        Classes.Camera camera;
+        Classes.CameraObject camera;
         #endregion
 
         #region SETUP
@@ -41,11 +42,20 @@ namespace moon_phases
         #region INITIALIZE
         protected override void Initialize()
         {
+            // GAME PROPERTIES
             Window.Title = "Moon Phases";
+            gLobal_variables.GridSize = 32;
 
-            player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2); // INITIALIZE PLAYER PROPERTIES
-            camera = new Camera("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f); // CAMERA
-            gLobal_variables.GlobalZeroPosition = camera.Position; // GLOBAL 0 POSITION
+            // INITIALIZE PLAYER PROPERTIES
+            player_object.Position = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+
+            // CAMERA
+            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f);
+            camera.CenterProperties = new Vector2(410, 250);
+
+            // UI
+            user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
+            text1 = new UiText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.White);
 
             base.Initialize();
         }
@@ -54,14 +64,15 @@ namespace moon_phases
         #region LOAD_CONTETNT
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // UI
-            arial = Content.Load<SpriteFont>("fonts/prototype_font"); // INITIALIZE TEXT
+            sprite_batch = new SpriteBatch(GraphicsDevice);
 
             // GAME
             player_object.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
             primary_object_1.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
+
+            // PIXEL TEXTURE
+            pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
+            pixel_texture.SetData(new Color[] { Color.White });
         }
         #endregion
 
@@ -72,13 +83,17 @@ namespace moon_phases
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            #region UI
+            // GLOBAL CENTER
+            gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X  - camera.CenterProperties.X, camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
 
+            // UI
+            #region UI
+            text1.RefreshPosition(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter);
             #endregion
-                
+
             #region CAMERA
             // CAMERA
-            camera.Refresh(new Vector2(player_object.Position.X + 410, player_object.Position.Y + 250));
+            camera.Refresh(new Vector2(player_object.Position.X + camera.CenterProperties.X, player_object.Position.Y + camera.CenterProperties.Y));
             #endregion
 
             // PLAYER MOVEMENT
@@ -148,14 +163,33 @@ namespace moon_phases
 
             // DRAW
             #region SPRITE_BATCH_DRAWING
-            spriteBatch.Begin(transformMatrix: camera.Transform);
+            sprite_batch.Begin(transformMatrix: camera.Transform);
 
-            spriteBatch.Draw(player_object.Texture, player_object.Position, Color.White); // DRAW PLAYER
-            spriteBatch.Draw(primary_object_1.Texture, primary_object_1.Position, Color.White); // DRAW OBJECT1
+            #region WORLD 
+            // WORLD
+            for (int x = 0; x < GraphicsDevice.Viewport.Width; x += gLobal_variables.GridSize)
+            {
+                for (int y = 0; y < GraphicsDevice.Viewport.Height; y += gLobal_variables.GridSize)
+                {
+                    bool isVisible = (x / gLobal_variables.GridSize) % 2 == 0 || (x / gLobal_variables.GridSize) % 3 == 0 &&
+                        (y / gLobal_variables.GridSize) % 2 == 0 || (y / gLobal_variables.GridSize) % 3 == 0;
 
-            spriteBatch.DrawString(arial, "Moon Phases", new Vector2(20, 20), Color.White); // TYPE TEXT
+                    if (isVisible)
+                    {
+                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, gLobal_variables.GridSize, gLobal_variables.GridSize), Color.White);
+                    }
+                }
+            }
+            #endregion
 
-            spriteBatch.End();
+            // GAME OBJECTS
+            player_object.DrawIt(sprite_batch);
+            primary_object_1.DrawIt(sprite_batch);
+
+            // UI
+            text1.TypeIt(sprite_batch);
+
+            sprite_batch.End();
             #endregion
 
             base.Draw(gameTime);
