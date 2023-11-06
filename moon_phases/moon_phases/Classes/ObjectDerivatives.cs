@@ -34,14 +34,15 @@ namespace moon_phases.Classes
 
         public void DrawIt(SpriteBatch sprite_batch)
         {
-            sprite_batch.Draw(this.Texture, this.Position, this.ObjectColor);
+            if (this.Enabled)
+                sprite_batch.Draw(this.Texture, this.Position, this.ObjectColor);
         }
     }
 
     internal class PlayerObject : PrimaryObject
     {
         public float Speed;
-
+        public Vector2 MoveDirection;
 
         // ANIMATION
 
@@ -56,6 +57,31 @@ namespace moon_phases.Classes
             Rectangle rect2 = new Rectangle((int)object1.Position.X, (int)object1.Position.Y, (int)object1.Texture.Width, (int)object1.Texture.Height);
 
             return (rect1.Intersects(rect2) == true);
+        }
+
+        public void SetMovement(GameTime gameTime)
+        {
+            var keyboard_state = Keyboard.GetState();
+
+            if (keyboard_state.IsKeyDown(Keys.W))
+            {
+                this.Position.Y -= this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (keyboard_state.IsKeyDown(Keys.S))
+            {
+                this.Position.Y += this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (keyboard_state.IsKeyDown(Keys.D))
+            {
+                this.Position.X += this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (keyboard_state.IsKeyDown(Keys.A))
+            {
+                this.Position.X -= this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
     }
 

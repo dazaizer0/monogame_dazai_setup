@@ -24,11 +24,13 @@ namespace moon_phases.Scenes
         // TEXTURES
         private static Texture2D player_texture;
         private static Texture2D object_texture;
+        private static Texture2D collect_texture2;
         private Texture2D pixel_texture;
 
         // OBJECTS
         PlayerObject player_object = new PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
-        PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(248, 248), object_texture, Color.White, true);
+        PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(250, 250), object_texture, Color.White, true);
+        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", new Vector2(300, 180), collect_texture2, Color.MediumPurple, true);
 
         // CAMERA
         CameraObject camera;
@@ -70,6 +72,10 @@ namespace moon_phases.Scenes
                 new Vector2((int)(primary_object_1.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
                 (int)(primary_object_1.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
+            collectable_object_1.Position =
+                new Vector2((int)(collectable_object_1.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
+                (int)(collectable_object_1.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
+
             base.Initialize();
         }
         #endregion
@@ -83,6 +89,7 @@ namespace moon_phases.Scenes
             // GAME
             player_object.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
             primary_object_1.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
+            collectable_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // COLLECTABLE OBJECT1 
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
@@ -121,30 +128,10 @@ namespace moon_phases.Scenes
             }
 
             // PLAYER MOVEMENT
-            Vector2 moveDirection = primary_object_1.Position - player_object.Position;
-            moveDirection.Normalize();
+            player_object.MoveDirection = primary_object_1.Position - player_object.Position;
+            player_object.MoveDirection.Normalize();
 
-            var keyboard_state = Keyboard.GetState();
-
-            if (keyboard_state.IsKeyDown(Keys.W))
-            {
-                player_object.Position.Y -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (keyboard_state.IsKeyDown(Keys.S))
-            {
-                player_object.Position.Y += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (keyboard_state.IsKeyDown(Keys.D))
-            {
-                player_object.Position.X += player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (keyboard_state.IsKeyDown(Keys.A))
-            {
-                player_object.Position.X -= player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            player_object.SetMovement(gameTime);
 
             #region PLAYER_COLLISIONS
             // PLAYER COLLISIONS
@@ -169,7 +156,12 @@ namespace moon_phases.Scenes
             // PLAYER COLLISIONS WITH OBJECT1
             if (player_object.IfCollision(primary_object_1))
             {
-                player_object.Position -= moveDirection * player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position -= player_object.MoveDirection * player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (player_object.IfCollision(collectable_object_1))
+            {
+                collectable_object_1.Enabled = false;
             }
             #endregion
             #endregion
@@ -203,14 +195,14 @@ namespace moon_phases.Scenes
             #endregion
 
             // GAME OBJECTS
-            if (player_object.Enabled)
-                player_object.DrawIt(sprite_batch);
-            if (primary_object_1.Enabled)
-                primary_object_1.DrawIt(sprite_batch);
+            player_object.DrawIt(sprite_batch);
+            primary_object_1.DrawIt(sprite_batch);
+            collectable_object_1.DrawIt(sprite_batch);
+
+            sprite_batch.Draw(pixel_texture, new Rectangle(115, 115, scene_properties.GridSize, scene_properties.GridSize), Color.Blue); // LAYER TEST
 
             // UI
-            if (text1.Enabled)
-                text1.TypeIt(sprite_batch);
+            text1.TypeIt(sprite_batch);
 
             sprite_batch.End();
             #endregion

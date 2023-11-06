@@ -39,7 +39,8 @@ namespace moon_phases.Classes
 
         public void TypeIt(SpriteBatch sprite_batch)
         {
-            sprite_batch.DrawString(this.Font, this.Text, this.Position, this.TextColor);
+            if (this.Enabled)
+                sprite_batch.DrawString(this.Font, this.Text, this.Position, this.TextColor);
         }
     }
     #endregion
