@@ -28,7 +28,7 @@ namespace moon_phases.Scenes
 
         // OBJECTS
         PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(250, 250), object_texture, Color.White, true);
-        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", new Vector2(300, 180), collect_texture2, Color.MediumPurple, true);
+        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", new Vector2(300, 180), collect_texture2, Color.Purple, true);
 
         // PLAYER
         private static Texture2D player_texture;
@@ -62,12 +62,12 @@ namespace moon_phases.Scenes
             player_object.Position = new Vector2(player_object.Position.X + 96, player_object.Position.Y + 64);
 
             // CAMERA
-            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 0.8f, true);
+            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 1.2f, true);
             camera.CenterProperties = new Vector2(410, 250);
 
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
+            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.White, true);
 
             // OBJECTS
             primary_object_1.Position =
@@ -89,7 +89,7 @@ namespace moon_phases.Scenes
             sprite_batch = new SpriteBatch(GraphicsDevice);
 
             // GAME
-            player_object.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE PLAYER TEXTURE
+            player_object.Texture = Content.Load<Texture2D>("textures/simple_guy"); // INITIALIZE PLAYER TEXTURE
             primary_object_1.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
             collectable_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // COLLECTABLE OBJECT1 
 
@@ -176,7 +176,7 @@ namespace moon_phases.Scenes
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             #region SPRITE_BATCH_DRAWING
             // DRAW
