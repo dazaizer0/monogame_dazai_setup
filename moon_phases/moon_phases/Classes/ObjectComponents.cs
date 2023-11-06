@@ -3,13 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace moon_phases.Classes
 {
-    internal class Animation
+
+    internal class Component
+    {
+        public bool Enabled;
+
+        public Component(bool enabled)
+        {
+            Enabled = enabled;
+        }
+    }
+
+    internal class Animation : Component
     {
         public List<Texture2D> Frames = new List<Texture2D>();
         public Texture2D ActualFrame;
@@ -18,7 +26,7 @@ namespace moon_phases.Classes
         public float ElapsedTime;
         public float FrameDuration;
 
-        public Animation(List<Texture2D> frames, float elapsed_time, float frame_duration)
+        public Animation(List<Texture2D> frames, float elapsed_time, float frame_duration, bool enabled) : base(enabled)
         {
             Frames = frames;
             ElapsedTime = elapsed_time;
@@ -39,6 +47,22 @@ namespace moon_phases.Classes
              * 
              * DRAW: DRAWIT
             */
+        }
+    }
+
+    internal class SoundPlayer : Component
+    {
+        public SoundEffect Sound;
+
+        public SoundPlayer(SoundEffect sound_effect, bool enabled) : base(enabled)
+        {
+            Sound = sound_effect;
+        }
+
+        public void PlayIt()
+        {
+            if (this.Enabled)
+                this.Sound.Play();
         }
     }
 }
