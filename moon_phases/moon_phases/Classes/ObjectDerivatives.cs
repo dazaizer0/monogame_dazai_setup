@@ -13,6 +13,8 @@ namespace moon_phases.Classes
         public Vector2 Position;
         public bool Enabled;
 
+        public List<Component> Components;
+
         public Object(string name, Vector2 position, bool enabled)
         {
             Name = name;
@@ -59,7 +61,7 @@ namespace moon_phases.Classes
             return (rect1.Intersects(rect2) == true);
         }
 
-        public void SetMovement(GameTime gameTime)
+        public void AccelerateTopDownMovement(GameTime gameTime)
         {
             var keyboard_state = Keyboard.GetState();
 

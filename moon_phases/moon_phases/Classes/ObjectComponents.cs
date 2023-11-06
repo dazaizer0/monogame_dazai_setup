@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace moon_phases.Classes
 {
-
     internal class Component
     {
         public bool Enabled;
@@ -33,20 +33,16 @@ namespace moon_phases.Classes
             FrameDuration = frame_duration;
         }
 
-        public void PlayAnimation(SpriteBatch sprite_batch, PlayerObject player)
+        public void PlayAnimation(SpriteBatch sprite_batch, PlayerObject player, GameTime game_time)
         {
-            /*
-             * UPDATE: 
-             * ElapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-             * if (ElapsedTime >= FrameDuration)
-             * {
-             *    CurrentFrame = (CurrentFrame + 1) % Frames.Size();
-             *    ActualFrame = Frames[CurrentFrame];
-             *    ElapsedTime = 0;
-             * }
-             * 
-             * DRAW: DRAWIT
-            */
+            // IN DEVELOPMENT | PROTOTYPE | CONSPECT
+            ElapsedTime += (float)game_time.ElapsedGameTime.TotalSeconds;
+            if (ElapsedTime >= this.FrameDuration)
+            {
+                CurrentFrame = (CurrentFrame + 1) % Frames.Count;
+                ActualFrame = Frames[CurrentFrame];
+                ElapsedTime = 0;
+            }
         }
     }
 

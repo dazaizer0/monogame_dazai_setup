@@ -22,15 +22,17 @@ namespace moon_phases.Scenes
         UserInterfaceText text1;
 
         // TEXTURES
-        private static Texture2D player_texture;
         private static Texture2D object_texture;
         private static Texture2D collect_texture2;
         private Texture2D pixel_texture;
 
         // OBJECTS
-        PlayerObject player_object = new PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
         PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(250, 250), object_texture, Color.White, true);
         PrimaryObject collectable_object_1 = new PrimaryObject("collect1", new Vector2(300, 180), collect_texture2, Color.MediumPurple, true);
+
+        // PLAYER
+        private static Texture2D player_texture;
+        PlayerObject player_object = new PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
 
         // CAMERA
         CameraObject camera;
@@ -65,7 +67,7 @@ namespace moon_phases.Scenes
 
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            text1 = new UserInterfaceText("text1", "Hello World", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
+            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
 
             // OBJECTS
             primary_object_1.Position =
@@ -98,7 +100,7 @@ namespace moon_phases.Scenes
         #endregion
 
         #region UPDATE
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime game_time)
         {
             #region ELEMENTARY_PROPERTIES
             // EXIT 
@@ -131,7 +133,7 @@ namespace moon_phases.Scenes
             player_object.MoveDirection = primary_object_1.Position - player_object.Position;
             player_object.MoveDirection.Normalize();
 
-            player_object.SetMovement(gameTime);
+            player_object.AccelerateTopDownMovement(game_time);
 
             #region PLAYER_COLLISIONS
             // PLAYER COLLISIONS
@@ -156,7 +158,7 @@ namespace moon_phases.Scenes
             // PLAYER COLLISIONS WITH OBJECT1
             if (player_object.IfCollision(primary_object_1))
             {
-                player_object.Position -= player_object.MoveDirection * player_object.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                player_object.Position -= player_object.MoveDirection * player_object.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
             }
 
             if (player_object.IfCollision(collectable_object_1))
@@ -166,7 +168,7 @@ namespace moon_phases.Scenes
             #endregion
             #endregion
 
-            base.Update(gameTime);
+            base.Update(game_time);
         }
         #endregion
 
