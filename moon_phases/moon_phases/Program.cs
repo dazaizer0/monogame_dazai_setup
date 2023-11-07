@@ -1,3 +1,3 @@
 ﻿// MADE BY DAZAI | IN DEVELOPMENT -> MOON PHASES
-using var game = new moon_phases.Scenes.Main();
-game.Run();
+using var scene1 = new moon_phases.Scenes.Scene1();
+scene1.Run();

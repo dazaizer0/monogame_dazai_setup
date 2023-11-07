@@ -11,7 +11,7 @@ using moon_phases.CGM.GameObjects;
 
 namespace moon_phases.Scenes
 {
-    public class Main : Game
+    public class Scene1 : Game
     {
         #region VARIABLES
         // ELEMENTARY
@@ -41,7 +41,7 @@ namespace moon_phases.Scenes
         #endregion
 
         #region SETUP
-        public Main()
+        public Scene1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -118,7 +118,7 @@ namespace moon_phases.Scenes
             mouse_coordinates_text.RefreshPosition(new Vector2(100, 100), user_interface.Position);
 
             // CAMERA
-            camera.Refresh(new Vector2(player.Position.X + camera.CenterProperties.X, player.Position.Y + camera.CenterProperties.Y));
+            camera.Refresh(new Vector2(player.Position.X + camera.CenterProperties.X, player.Position.Y + camera.CenterProperties.Y), game_time);
 
             #region PLAYER_MANAGEMENT
             // MOUSE CONTROLL
@@ -162,6 +162,8 @@ namespace moon_phases.Scenes
 
             if (player.IfCollision(collectable_object)) // COLLECT
             {
+                if (collectable_object.Enabled == true)
+                    camera.Shake(0.1f); // SHAKE
                 collectable_object.Enabled = false;
             }
             #endregion
