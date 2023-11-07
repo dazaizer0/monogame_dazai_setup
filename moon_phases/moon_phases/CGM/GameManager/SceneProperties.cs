@@ -4,25 +4,17 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 
-namespace moon_phases.CGM
+namespace moon_phases.CGM.GameManager
 {
-    #region GLOBAL GAME STRUCTURES
-    internal struct GLobalSceneVariables
-    {
-        public Vector2 GlobalScreenCenter;
-        public Vector2 MouseClickPosition;
-    }
-
-    internal class GameSceneProperties
+    internal class SceneProperties
     {
         public int GridSize;
         public int MapSize;
 
-        public GameSceneProperties(int grid_size, int map_size)
+        public SceneProperties(int grid_size, int map_size)
         {
             GridSize = grid_size;
             MapSize = map_size;
         }
     }
-    #endregion
 }

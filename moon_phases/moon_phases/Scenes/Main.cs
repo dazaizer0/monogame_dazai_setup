@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System;
 
 using moon_phases.CGM;
+using moon_phases.CGM.GameManager;
+using moon_phases.CGM.UserInterface;
+using moon_phases.CGM.GameObjects;
 
 namespace moon_phases.Scenes
 {
@@ -12,34 +15,29 @@ namespace moon_phases.Scenes
     {
         #region VARIABLES
         // ELEMENTARY
-        private GLobalSceneVariables gLobal_variables;
         private GraphicsDeviceManager graphics;
         private SpriteBatch sprite_batch;
 
-        private GameSceneProperties scene_properties = new GameSceneProperties(32, 64);
+        private GLobalSceneVariables gLobal_variables;
+        private SceneProperties scene_properties = new SceneProperties(32, 64);
 
-        // UI
-        UserInterfacePanel user_interface_panel;
-        UserInterfaceText text1;
+        // USER INTERFACE
+        private Panel user_interface;
+        private UiText mouse_coordinates_text;
 
-        // TEXTURES
-        private static Texture2D object_texture;
-        private static Texture2D collect_texture2;
-        private Texture2D pixel_texture;
+        // STATIC TEXTURES
+        private static Texture2D collision_object_texture;
+        private static Texture2D collectable_object_texture;
+        private static Texture2D pixel_texture;
 
-        // OBJECTS
-        PrimaryObject primary_object_1 = new PrimaryObject("object1", 
-            new Vector2(250, 250), object_texture, Color.Black, true);
-        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", 
-            new Vector2(300, 180), collect_texture2, Color.Purple, true);
+        // GAME OBJECTS
+        BasicObject collision_object = new BasicObject(new Vector2(250, 250), collision_object_texture, Color.Black, true);
+        BasicObject collectable_object = new BasicObject( new Vector2(300, 180), collectable_object_texture, Color.Purple, true);
 
         // PLAYER
         private static Texture2D player_texture;
-        PlayerObject player = new PlayerObject("player", 
-            new Vector2(0, 0), player_texture, Color.Green, 200f, true);
-
-        // CAMERA
-        CameraObject camera;
+        Player player = new Player(new Vector2(0, 0), player_texture, 200f, Color.Green, true);
+        Camera camera; // CAMERA
         #endregion
 
         #region SETUP
@@ -62,26 +60,24 @@ namespace moon_phases.Scenes
                 graphics.PreferredBackBufferWidth / 2 / scene_properties.GridSize * scene_properties.GridSize,
                 graphics.PreferredBackBufferHeight / 2 / scene_properties.GridSize * scene_properties.GridSize);
 
-            // PLAYER
             player.Position = new Vector2(player.Position.X + 96, player.Position.Y + 64);
 
             // CAMERA
-            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 1.25f, true);
+            camera = new Camera(new Vector2(0, 0), GraphicsDevice.Viewport, 1.25f, true);
             camera.CenterProperties = new Vector2(410, 250);
 
-            // UI
-            user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, 
-                new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
+            // USER INTERFACE
+            user_interface = new Panel(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
+            mouse_coordinates_text = new UiText(gLobal_variables.GlobalScreenCenter, new Vector2(20, 20),
+                Content.Load<SpriteFont>("fonts/prototype_font"), "Moon Phases", Color.Black, true);
 
-            // OBJECTS
-            primary_object_1.Position =
-                new Vector2((int)(primary_object_1.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
-                (int)(primary_object_1.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
+            // GAME OBJECTS
+            new Vector2((int)(collectable_object.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
+                (int)(collectable_object.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
-            collectable_object_1.Position =
-                new Vector2((int)(collectable_object_1.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
-                (int)(collectable_object_1.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
+            collectable_object.Position =
+                new Vector2((int)(collectable_object.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
+                (int)(collectable_object.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
             base.Initialize();
         }
@@ -93,10 +89,10 @@ namespace moon_phases.Scenes
             // SPRITE BATCH
             sprite_batch = new SpriteBatch(GraphicsDevice);
 
-            // GAME
-            player.Texture = Content.Load<Texture2D>("textures/white_circle32"); // INITIALIZE PLAYER TEXTURE
-            primary_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // INITIALIZE OBECT1 TEXTURE
-            collectable_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // COLLECTABLE OBJECT1 
+            // INITIALIZE TEXTURES
+            player.Texture = Content.Load<Texture2D>("textures/white_circle32");
+            collision_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
+            collectable_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
@@ -112,19 +108,17 @@ namespace moon_phases.Scenes
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // GLOBAL CENTER
+            // GLOBAL SCREEN CENTER
             gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X - camera.CenterProperties.X,
-                camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
-            user_interface_panel.Position = gLobal_variables.GlobalScreenCenter;
+                camera.Position.Y - camera.CenterProperties.Y);
+            user_interface.Position = gLobal_variables.GlobalScreenCenter;
             #endregion
 
-            #region UI
-            text1.RefreshPosition(new Vector2(100, 100), user_interface_panel.Position);
-            #endregion
+            // USER INTERFACE
+            mouse_coordinates_text.RefreshPosition(new Vector2(100, 100), user_interface.Position);
 
-            #region CAMERA
+            // CAMERA
             camera.Refresh(new Vector2(player.Position.X + camera.CenterProperties.X, player.Position.Y + camera.CenterProperties.Y));
-            #endregion
 
             #region PLAYER_MANAGEMENT
             // MOUSE CONTROLL
@@ -132,14 +126,11 @@ namespace moon_phases.Scenes
             if (mouse_state.LeftButton == ButtonState.Pressed)
             {
                 gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
-                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}," +
+                mouse_coordinates_text.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}," +
                     $" {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
             }
 
             // PLAYER MOVEMENT
-            player.MoveDirection = primary_object_1.Position - player.Position;
-            player.MoveDirection.Normalize();
-
             player.AccelerateTopDownMovement(game_time);
 
             #region PLAYER_COLLISIONS
@@ -163,14 +154,15 @@ namespace moon_phases.Scenes
             }
 
             // PLAYER COLLISIONS WITH OBJECT1
-            if (player.IfCollision(primary_object_1)) // STOP
+            if (player.IfCollision(collision_object)) // STOP
             {
-                player.Position -= player.MoveDirection * player.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
+                collision_object.GetPlayerMoveDirection(player);
+                player.Position -= collision_object.PlayerMoveDirection * player.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
             }
 
-            if (player.IfCollision(collectable_object_1)) // COLLECT
+            if (player.IfCollision(collectable_object)) // COLLECT
             {
-                collectable_object_1.Enabled = false;
+                collectable_object.Enabled = false;
             }
             #endregion
             #endregion
@@ -186,7 +178,6 @@ namespace moon_phases.Scenes
             GraphicsDevice.Clear(Color.Red);
 
             #region SPRITE_BATCH_DRAWING
-            // DRAW
             sprite_batch.Begin(transformMatrix: camera.Transform);
 
             #region WORLD 
@@ -201,13 +192,11 @@ namespace moon_phases.Scenes
 
             // GAME OBJECTS
             player.DrawIt(sprite_batch);
-            primary_object_1.DrawIt(sprite_batch);
-            collectable_object_1.DrawIt(sprite_batch);
+            collision_object.DrawIt(sprite_batch);
+            collectable_object.DrawIt(sprite_batch);
 
-            sprite_batch.Draw(pixel_texture, new Rectangle(115, 115, scene_properties.GridSize, scene_properties.GridSize), Color.Blue); // LAYER TEST
-
-            // UI
-            text1.TypeIt(sprite_batch);
+            // USER INTERFACE
+            mouse_coordinates_text.TypeIt(sprite_batch);
 
             sprite_batch.End();
             #endregion
