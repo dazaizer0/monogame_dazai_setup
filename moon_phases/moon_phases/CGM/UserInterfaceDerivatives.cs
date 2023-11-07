@@ -6,7 +6,7 @@ using System;
 
 using static System.Net.Mime.MediaTypeNames;
 
-namespace moon_phases.Classes
+namespace moon_phases.CGM
 {
     #region NEW UI OBJECT SYSTEM
     internal class UserInterfacePanel : Object

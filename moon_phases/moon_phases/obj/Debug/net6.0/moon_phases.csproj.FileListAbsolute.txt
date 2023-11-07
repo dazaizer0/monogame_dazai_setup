@@ -26,7 +26,6 @@ C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6
 C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6.0\moon_phases.genruntimeconfig.cache
 C:\Users\mydat\Documents\_cs\AzraelsDream\moon_phases\moon_phases\obj\Debug\net6.0\ref\moon_phases.dll
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\fonts\prototype_font.xnb
-C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\prototype.xnb
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\moon_phases.exe
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\moon_phases.deps.json
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\moon_phases.runtimeconfig.json
@@ -53,4 +52,3 @@ C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\obj\Debu
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\obj\Debug\net6.0\moon_phases.genruntimeconfig.cache
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\obj\Debug\net6.0\ref\moon_phases.dll
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\white_circle32.xnb
-C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\simple_guy.xnb

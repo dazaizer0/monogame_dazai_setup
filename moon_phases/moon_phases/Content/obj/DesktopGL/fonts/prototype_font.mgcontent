@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/fonts/prototype_font.spritefont</SourceFile>
-  <SourceTime>2023-11-04T11:46:03.2390907+01:00</SourceTime>
+  <SourceTime>2023-11-06T19:01:42.723671+01:00</SourceTime>
   <DestFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/bin/DesktopGL/fonts/prototype_font.xnb</DestFile>
-  <DestTime>2023-11-06T14:50:45.0623795+01:00</DestTime>
+  <DestTime>2023-11-07T15:16:28.9334746+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T13:44:56+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

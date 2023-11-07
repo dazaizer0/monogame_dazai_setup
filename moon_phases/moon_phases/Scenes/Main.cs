@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 
-using moon_phases.Classes;
+using moon_phases.CGM;
 
 namespace moon_phases.Scenes
 {
@@ -27,12 +27,15 @@ namespace moon_phases.Scenes
         private Texture2D pixel_texture;
 
         // OBJECTS
-        PrimaryObject primary_object_1 = new PrimaryObject("object1", new Vector2(250, 250), object_texture, Color.White, true);
-        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", new Vector2(300, 180), collect_texture2, Color.Purple, true);
+        PrimaryObject primary_object_1 = new PrimaryObject("object1", 
+            new Vector2(250, 250), object_texture, Color.Black, true);
+        PrimaryObject collectable_object_1 = new PrimaryObject("collect1", 
+            new Vector2(300, 180), collect_texture2, Color.Purple, true);
 
         // PLAYER
         private static Texture2D player_texture;
-        PlayerObject player_object = new PlayerObject("player", new Vector2(0, 0), player_texture, Color.White, 200f, true);
+        PlayerObject player_object = new PlayerObject("player", 
+            new Vector2(0, 0), player_texture, Color.Green, 200f, true);
 
         // CAMERA
         CameraObject camera;
@@ -62,12 +65,13 @@ namespace moon_phases.Scenes
             player_object.Position = new Vector2(player_object.Position.X + 96, player_object.Position.Y + 64);
 
             // CAMERA
-            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 1.2f, true);
+            camera = new CameraObject("camera", GraphicsDevice.Viewport, new Vector2(0, 0), 1.25f, true);
             camera.CenterProperties = new Vector2(410, 250);
 
             // UI
             user_interface_panel = new UserInterfacePanel("mainui", new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.White, true);
+            text1 = new UserInterfaceText("text1", "Moon Phases", gLobal_variables.GlobalScreenCenter, 
+                new Vector2(20, 20), Content.Load<SpriteFont>("fonts/prototype_font"), Color.Black, true);
 
             // OBJECTS
             primary_object_1.Position =
@@ -89,13 +93,13 @@ namespace moon_phases.Scenes
             sprite_batch = new SpriteBatch(GraphicsDevice);
 
             // GAME
-            player_object.Texture = Content.Load<Texture2D>("textures/simple_guy"); // INITIALIZE PLAYER TEXTURE
-            primary_object_1.Texture = Content.Load<Texture2D>("textures/prototype"); // INITIALIZE OBECT1 TEXTURE
+            player_object.Texture = Content.Load<Texture2D>("textures/white_circle32"); // INITIALIZE PLAYER TEXTURE
+            primary_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // INITIALIZE OBECT1 TEXTURE
             collectable_object_1.Texture = Content.Load<Texture2D>("textures/white_circle32"); // COLLECTABLE OBJECT1 
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
-            pixel_texture.SetData(new Color[] { Color.LightPink });
+            pixel_texture.SetData(new Color[] { Color.White });
         }
         #endregion
 
@@ -108,12 +112,13 @@ namespace moon_phases.Scenes
                 Exit();
 
             // GLOBAL CENTER
-            gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X - camera.CenterProperties.X, camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
+            gLobal_variables.GlobalScreenCenter = new Vector2(camera.Position.X - camera.CenterProperties.X,
+                camera.Position.Y - camera.CenterProperties.Y); // GLOBAL 0 POSITION
             user_interface_panel.Position = gLobal_variables.GlobalScreenCenter;
             #endregion
 
             #region UI
-            text1.RefreshPosition(new Vector2(0, 0), user_interface_panel.Position);
+            text1.RefreshPosition(new Vector2(100, 100), user_interface_panel.Position);
             #endregion
 
             #region CAMERA
@@ -126,7 +131,8 @@ namespace moon_phases.Scenes
             if (mouse_state.LeftButton == ButtonState.Pressed)
             {
                 gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
-                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}, {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
+                text1.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}," +
+                    $" {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
             }
 
             // PLAYER MOVEMENT
@@ -156,12 +162,12 @@ namespace moon_phases.Scenes
             }
 
             // PLAYER COLLISIONS WITH OBJECT1
-            if (player_object.IfCollision(primary_object_1))
+            if (player_object.IfCollision(primary_object_1)) // STOP
             {
                 player_object.Position -= player_object.MoveDirection * player_object.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
             }
 
-            if (player_object.IfCollision(collectable_object_1))
+            if (player_object.IfCollision(collectable_object_1)) // COLLECT
             {
                 collectable_object_1.Enabled = false;
             }
@@ -176,7 +182,7 @@ namespace moon_phases.Scenes
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Red);
 
             #region SPRITE_BATCH_DRAWING
             // DRAW
@@ -187,11 +193,7 @@ namespace moon_phases.Scenes
             {
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
-                    bool isVisible = x / scene_properties.GridSize % 2 == 0 && y / scene_properties.GridSize % 2 == 0;
-                    if (isVisible)
-                    {
-                        sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
-                    }
+                    sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
                 }
             }
             #endregion

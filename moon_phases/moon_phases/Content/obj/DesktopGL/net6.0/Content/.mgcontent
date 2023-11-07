@@ -5,13 +5,9 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/fonts/prototype_font.spritefont</File>
-    <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/prototype.png</File>
-    <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/simple_guy.png</File>
     <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/white_circle32.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

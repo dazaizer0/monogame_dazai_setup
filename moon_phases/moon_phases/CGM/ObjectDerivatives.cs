@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 
-namespace moon_phases.Classes
+namespace moon_phases.CGM
 {
     #region NEW OBJECT SYSTEM
     internal class Object
