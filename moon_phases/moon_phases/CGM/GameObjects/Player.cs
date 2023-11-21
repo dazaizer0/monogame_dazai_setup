@@ -9,10 +9,20 @@ namespace moon_phases.CGM.GameObjects
     internal class Player : BasicObject
     {
         public float Speed;
+        public float BaseSpeed;
+        public float SprintSpeed;
+
+        public float DashForce;
+        public float DashCooldown;
+        public float DashTimer = 0f;
+        public bool DashEnable = true;
+
+        public Vector2 MoveDirection;
 
         public Player (Vector2 position, Texture2D texture, float speed, Color object_color, bool enabled) : base(position, texture, object_color, enabled)
         {
-            Speed = speed;
+            BaseSpeed = speed;
+            SprintSpeed = speed;
         }
 
         public bool IfCollision(BasicObject object1)
@@ -23,28 +33,58 @@ namespace moon_phases.CGM.GameObjects
             return (rect1.Intersects(rect2) == true);
         }
 
-        public void AccelerateTopDownMovement(GameTime gameTime)
+        public void AccelerateTopDownMovement(GameTime game_time)
         {
             var keyboard_state = Keyboard.GetState();
 
             if (keyboard_state.IsKeyDown(Keys.W))
             {
-                this.Position.Y -= this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.Position.Y -= this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
+                this.MoveDirection = new Vector2(0, -1);
             }
 
             if (keyboard_state.IsKeyDown(Keys.S))
             {
-                this.Position.Y += this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.Position.Y += this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
+                this.MoveDirection = new Vector2(0, 1);
             }
 
             if (keyboard_state.IsKeyDown(Keys.D))
             {
-                this.Position.X += this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.Position.X += this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
+                this.MoveDirection = new Vector2(1, 0);
             }
 
             if (keyboard_state.IsKeyDown(Keys.A))
             {
-                this.Position.X -= this.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.Position.X -= this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
+                this.MoveDirection = new Vector2(-1, 0);
+            }
+
+            if (keyboard_state.IsKeyDown(Keys.Space) && DashEnable)
+            {
+                this.Position += MoveDirection * new Vector2(DashForce, DashForce);
+                DashEnable = false;
+            }
+
+            if (!this.DashEnable)
+            {
+                this.DashTimer += (float)game_time.ElapsedGameTime.TotalSeconds;
+
+                if (this.DashTimer > this.DashCooldown)
+                {
+                    this.DashEnable = true;
+                    this.DashTimer = 0f;
+                }
+            }
+
+            if (keyboard_state.IsKeyDown(Keys.LeftShift))
+            {
+                this.Speed = SprintSpeed;
+            }
+            else
+            {
+                this.Speed = BaseSpeed;
             }
         }
     }

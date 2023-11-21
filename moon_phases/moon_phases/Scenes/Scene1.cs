@@ -8,6 +8,7 @@ using moon_phases.CGM;
 using moon_phases.CGM.GameManager;
 using moon_phases.CGM.UserInterface;
 using moon_phases.CGM.GameObjects;
+using MonoGame.Extended.Timers;
 
 namespace moon_phases.Scenes
 {
@@ -55,6 +56,7 @@ namespace moon_phases.Scenes
             // GAME PROPERTIES
             Window.Title = "Moon Phases";
 
+            #region PLAYER OBJECT AND PLAYER CAMERA INITIALIZE
             // INITIALIZE PLAYER PROPERTIES
             player.Position = new Vector2(
                 graphics.PreferredBackBufferWidth / 2 / scene_properties.GridSize * scene_properties.GridSize,
@@ -62,9 +64,17 @@ namespace moon_phases.Scenes
 
             player.Position = new Vector2(player.Position.X + 96, player.Position.Y + 64);
 
+            // SPRINT
+            player.SprintSpeed = player.BaseSpeed + 128f;
+
+            // DASH
+            player.DashForce = 64f;
+            player.DashCooldown = 1f;
+
             // CAMERA
             camera = new Camera(new Vector2(0, 0), GraphicsDevice.Viewport, 1.25f, true);
             camera.CenterProperties = new Vector2(410, 250);
+            #endregion
 
             // USER INTERFACE
             user_interface = new Panel(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
@@ -128,6 +138,8 @@ namespace moon_phases.Scenes
                 gLobal_variables.MouseClickPosition = new Vector2(mouse_state.X, mouse_state.Y);
                 mouse_coordinates_text.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}," +
                     $" {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
+
+                camera.Shake(0.04f, 6f);
             }
 
             // PLAYER MOVEMENT
@@ -163,7 +175,7 @@ namespace moon_phases.Scenes
             if (player.IfCollision(collectable_object)) // COLLECT
             {
                 if (collectable_object.Enabled == true)
-                    camera.Shake(0.1f); // SHAKE
+                    camera.Shake(0.1f, 2f); // SHAKE
                 collectable_object.Enabled = false;
             }
             #endregion

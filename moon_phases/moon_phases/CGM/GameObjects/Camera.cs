@@ -26,9 +26,9 @@ namespace moon_phases.CGM.GameObjects
             random = new Random();
         }
 
-        public void Refresh(Vector2 playerPosition, GameTime game_time)
+        public void Refresh(Vector2 player_position, GameTime game_time)
         {
-            OriginalPosition = new Vector2(playerPosition.X - Viewport.Width / 2, playerPosition.Y - Viewport.Height / 2);
+            OriginalPosition = new Vector2(player_position.X - Viewport.Width / 2, player_position.Y - Viewport.Height / 2);
 
             if (ShakeDuration > 0)
             {
@@ -47,9 +47,10 @@ namespace moon_phases.CGM.GameObjects
                         Matrix.CreateTranslation(new Vector3(Viewport.Width / 2, Viewport.Height / 2, 0));
         }
 
-        public void Shake(float duration)
+        public void Shake(float duration, float intensity)
         {
             ShakeDuration = duration;
+            ShakeIntensity = intensity;
             OriginalPosition = Position;
         }
     }

@@ -12,7 +12,7 @@ namespace moon_phases.CGM.GameObjects
         public Vector2 Position;
         public bool Enabled;
 
-        public List<Component> Components;
+        public List<BasicComponent> Components;
 
         public Object(Vector2 position, bool enabled)
         {

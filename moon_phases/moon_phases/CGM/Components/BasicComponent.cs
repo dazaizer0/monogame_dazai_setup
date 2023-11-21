@@ -6,7 +6,7 @@ using System;
 
 namespace moon_phases.CGM.Components
 {
-    internal class Component
+    internal class BasicComponent
     {
     }
 }
