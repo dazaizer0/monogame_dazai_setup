@@ -54,3 +54,5 @@ C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\obj\Debu
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\white_circle32.xnb
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\MonoGame.Extended.dll
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\brick.xnb
+C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\brick2.xnb

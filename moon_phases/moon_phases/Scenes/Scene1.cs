@@ -30,6 +30,7 @@ namespace moon_phases.Scenes
         private static Texture2D collision_object_texture;
         private static Texture2D collectable_object_texture;
         private static Texture2D pixel_texture;
+        private static Texture2D grass_brick_texture;
 
         // GAME OBJECTS
         BasicObject collision_object = new BasicObject(new Vector2(250, 250), collision_object_texture, Color.Black, true);
@@ -37,7 +38,7 @@ namespace moon_phases.Scenes
 
         // PLAYER
         private static Texture2D player_texture;
-        Player player = new Player(new Vector2(0, 0), player_texture, 200f, Color.Green, true);
+        Player player = new Player(new Vector2(0, 0), player_texture, 200f, Color.Black, true);
         Camera camera; // CAMERA
         #endregion
 
@@ -79,7 +80,7 @@ namespace moon_phases.Scenes
             // USER INTERFACE
             user_interface = new Panel(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
             mouse_coordinates_text = new UiText(gLobal_variables.GlobalScreenCenter, new Vector2(20, 20),
-                Content.Load<SpriteFont>("fonts/prototype_font"), "Moon Phases", Color.Black, true);
+                Content.Load<SpriteFont>("fonts/prototype_font"), "Moon Phases", Color.White, true);
 
             // GAME OBJECTS
             new Vector2((int)(collectable_object.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
@@ -103,6 +104,7 @@ namespace moon_phases.Scenes
             player.Texture = Content.Load<Texture2D>("textures/white_circle32");
             collision_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
             collectable_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
+            grass_brick_texture = Content.Load<Texture2D>("textures/brick2");
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
@@ -189,7 +191,7 @@ namespace moon_phases.Scenes
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.Red);
+            GraphicsDevice.Clear(Color.Black);
 
             #region SPRITE_BATCH_DRAWING
             sprite_batch.Begin(transformMatrix: camera.Transform);
@@ -199,7 +201,8 @@ namespace moon_phases.Scenes
             {
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
-                    sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
+                    // sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
+                    sprite_batch.Draw(grass_brick_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
                 }
             }
             #endregion
