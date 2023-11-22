@@ -10,14 +10,16 @@ namespace moon_phases.CGM.GameObjects
     internal class Object
     {
         public Vector2 Position;
+        public float Rotation;
         public bool Enabled;
 
         public List<BasicComponent> Components;
 
-        public Object(Vector2 position, bool enabled)
+        public Object(Vector2 position, float rotation, bool enabled)
         {
             Position = position;
             Enabled = enabled;
+            Rotation = rotation;
         }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/brick2.png</SourceFile>
-  <SourceTime>2023-11-21T22:10:58.3349967+01:00</SourceTime>
-  <DestFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/bin/DesktopGL/Content/textures/brick2.xnb</DestFile>
-  <DestTime>2023-11-21T22:11:26.1812464+01:00</DestTime>
+  <SourceFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/player.png</SourceFile>
+  <SourceTime>2023-11-22T17:35:21.4742831+01:00</SourceTime>
+  <DestFile>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/bin/DesktopGL/Content/textures/triangle.xnb</DestFile>
+  <DestTime>2023-11-22T19:30:58.423527+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T13:44:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

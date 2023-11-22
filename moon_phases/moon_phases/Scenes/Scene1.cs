@@ -30,15 +30,14 @@ namespace moon_phases.Scenes
         private static Texture2D collision_object_texture;
         private static Texture2D collectable_object_texture;
         private static Texture2D pixel_texture;
-        private static Texture2D grass_brick_texture;
 
         // GAME OBJECTS
-        BasicObject collision_object = new BasicObject(new Vector2(250, 250), collision_object_texture, Color.Black, true);
-        BasicObject collectable_object = new BasicObject( new Vector2(300, 180), collectable_object_texture, Color.Purple, true);
+        BasicObject collision_object = new BasicObject(new Vector2(250, 250), 0.0f, collision_object_texture, Color.White, true);
+        BasicObject collectable_object = new BasicObject( new Vector2(300, 180), 0.0f, collectable_object_texture, Color.Purple, true);
 
         // PLAYER
         private static Texture2D player_texture;
-        Player player = new Player(new Vector2(0, 0), player_texture, 200f, Color.Black, true);
+        Player player = new Player(new Vector2(0, 0), 0.0f, player_texture, 200f, Color.White, true);
         Camera camera; // CAMERA
         #endregion
 
@@ -73,13 +72,13 @@ namespace moon_phases.Scenes
             player.DashCooldown = 1f;
 
             // CAMERA
-            camera = new Camera(new Vector2(0, 0), GraphicsDevice.Viewport, 1.25f, true);
+            camera = new Camera(new Vector2(0, 0), 0.0f, GraphicsDevice.Viewport, 1.25f, true);
             camera.CenterProperties = new Vector2(410, 250);
             #endregion
 
             // USER INTERFACE
-            user_interface = new Panel(new Vector2(0, 0), gLobal_variables.GlobalScreenCenter, true);
-            mouse_coordinates_text = new UiText(gLobal_variables.GlobalScreenCenter, new Vector2(20, 20),
+            user_interface = new Panel(new Vector2(0, 0), 0.0f, gLobal_variables.GlobalScreenCenter, true);
+            mouse_coordinates_text = new UiText(gLobal_variables.GlobalScreenCenter, new Vector2(20, 20), 0.0f,
                 Content.Load<SpriteFont>("fonts/prototype_font"), "Moon Phases", Color.White, true);
 
             // GAME OBJECTS
@@ -102,13 +101,12 @@ namespace moon_phases.Scenes
 
             // INITIALIZE TEXTURES
             player.Texture = Content.Load<Texture2D>("textures/white_circle32");
-            collision_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
+            collision_object.Texture = Content.Load<Texture2D>("textures/triangle");
             collectable_object.Texture = Content.Load<Texture2D>("textures/white_circle32");
-            grass_brick_texture = Content.Load<Texture2D>("textures/brick2");
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
-            pixel_texture.SetData(new Color[] { Color.White });
+            pixel_texture.SetData(new Color[] { Color.Black });
         }
         #endregion
 
@@ -183,6 +181,8 @@ namespace moon_phases.Scenes
             #endregion
             #endregion
 
+            collectable_object.LookAt(player.Position, game_time);
+
             base.Update(game_time);
         }
         #endregion
@@ -191,7 +191,7 @@ namespace moon_phases.Scenes
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Red);
 
             #region SPRITE_BATCH_DRAWING
             sprite_batch.Begin(transformMatrix: camera.Transform);
@@ -202,7 +202,7 @@ namespace moon_phases.Scenes
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
                     // sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
-                    sprite_batch.Draw(grass_brick_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
+                    sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
                 }
             }
             #endregion

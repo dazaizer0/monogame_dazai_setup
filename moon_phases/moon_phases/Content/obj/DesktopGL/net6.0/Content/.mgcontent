@@ -5,14 +5,12 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/fonts/prototype_font.spritefont</File>
-    <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/brick.png</File>
-    <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/brick2.png</File>
+    <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/player.png</File>
     <File>C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/white_circle32.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
+    <File>textures/triangle.png</File>
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

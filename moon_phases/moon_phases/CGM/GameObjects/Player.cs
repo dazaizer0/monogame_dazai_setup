@@ -19,7 +19,7 @@ namespace moon_phases.CGM.GameObjects
 
         public Vector2 MoveDirection;
 
-        public Player (Vector2 position, Texture2D texture, float speed, Color object_color, bool enabled) : base(position, texture, object_color, enabled)
+        public Player (Vector2 position, float rotation, Texture2D texture, float speed, Color object_color, bool enabled) : base(position, rotation, texture, object_color, enabled)
         {
             BaseSpeed = speed;
             SprintSpeed = speed;

@@ -1,2 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/brick2.png","C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/bin/DesktopGL/textures/brick2.xnb","TextureProcessor","Texture2DContent",278,16469,0,219657
+"C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/textures/player.png","C:/Users/mydat/Documents/_cs/moon_phases_github/moon_phases/moon_phases/Content/bin/DesktopGL/textures/triangle.xnb","TextureProcessor","Texture2DContent",203,4181,0,2109278

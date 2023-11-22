@@ -10,7 +10,7 @@ namespace moon_phases.CGM.UserInterface
     {
         public Vector2 ScreenCenter;
 
-        public Panel(Vector2 position, Vector2 screen_center, bool enabled) : base(position, enabled)
+        public Panel(Vector2 position, float rotation, Vector2 screen_center, bool enabled) : base(position, rotation, enabled)
         {
             ScreenCenter = screen_center;
         }

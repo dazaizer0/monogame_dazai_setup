@@ -20,7 +20,7 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/prototype_font.spritefont
 
-#begin textures/brick.png
+#begin textures/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -30,19 +30,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/brick.png
-
-#begin textures/brick2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/brick2.png
+/build:textures/player.png;textures/triangle.png
 
 #begin textures/white_circle32.png
 /importer:TextureImporter
