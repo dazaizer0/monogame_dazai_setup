@@ -15,7 +15,7 @@ namespace moon_phases.CGM.FunctionalAdditives
             from = (from + MathHelper.TwoPi) % MathHelper.TwoPi;
             to = (to + MathHelper.TwoPi) % MathHelper.TwoPi;
 
-            // Interpolacja kątów
+            // Interpola
             float result = from + (to - from) * amount;
 
             // Ponowna normalizacja wyniku

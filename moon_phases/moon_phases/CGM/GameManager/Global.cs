@@ -6,6 +6,11 @@ using System;
 
 namespace moon_phases.CGM.GameManager
 {
+    internal class CGMManager
+    {
+        public static int SceneNumber = 0;
+    }
+
     internal struct GLobalSceneVariables
     {
         public Vector2 GlobalScreenCenter;
