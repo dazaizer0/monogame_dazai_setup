@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
+using MonoGame.Extended.Timers;
 
 namespace moon_phases.CGM.GameObjects
 {
@@ -12,10 +13,12 @@ namespace moon_phases.CGM.GameObjects
         public float BaseSpeed;
         public float SprintSpeed;
 
-        public float DashForce;
-        public float DashCooldown;
-        public float DashTimer = 0f;
-        public bool DashEnable = true;
+        private bool IsJumping = false;
+        private float JumpForce = -700f;
+        private float JumpTime = 0f;
+        private const float MaxJumpTime = 0.5f;
+        public bool JumpEnable = true;
+        
 
         public Vector2 MoveDirection;
 
@@ -33,11 +36,11 @@ namespace moon_phases.CGM.GameObjects
             return (rect1.Intersects(rect2) == true);
         }
 
-        public void AccelerateTopDownMovement(GameTime game_time)
+        public void AccelerateMovement(GameTime game_time, Vector2 gravity)
         {
             var keyboard_state = Keyboard.GetState();
 
-            if (keyboard_state.IsKeyDown(Keys.W))
+            /*if (keyboard_state.IsKeyDown(Keys.W))
             {
                 this.Position.Y -= this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
                 this.MoveDirection = new Vector2(0, -1);
@@ -47,7 +50,7 @@ namespace moon_phases.CGM.GameObjects
             {
                 this.Position.Y += this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
                 this.MoveDirection = new Vector2(0, 1);
-            }
+            }*/
 
             if (keyboard_state.IsKeyDown(Keys.D))
             {
@@ -61,20 +64,24 @@ namespace moon_phases.CGM.GameObjects
                 this.MoveDirection = new Vector2(-1, 0);
             }
 
-            if (keyboard_state.IsKeyDown(Keys.Space) && DashEnable)
+            if (keyboard_state.IsKeyDown(Keys.Space) && JumpEnable && !IsJumping)
             {
-                this.Position += MoveDirection * new Vector2(DashForce, DashForce);
-                DashEnable = false;
+                IsJumping = true;
+                JumpTime = 0f;
             }
 
-            if (!this.DashEnable)
+            if (IsJumping)
             {
-                this.DashTimer += (float)game_time.ElapsedGameTime.TotalSeconds;
+                JumpTime += (float)game_time.ElapsedGameTime.TotalSeconds;
 
-                if (this.DashTimer > this.DashCooldown)
+                if (JumpTime < MaxJumpTime)
                 {
-                    this.DashEnable = true;
-                    this.DashTimer = 0f;
+                    this.Position += new Vector2(0, JumpForce * (1 - JumpTime / MaxJumpTime)) * (float)game_time.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    IsJumping = false;
+                    JumpEnable = false;
                 }
             }
 

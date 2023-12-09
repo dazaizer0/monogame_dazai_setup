@@ -39,5 +39,10 @@ namespace moon_phases.CGM.GameObjects
 
             Rotation = CGM.FunctionalAdditives.CGMath.LerpAngle(Rotation, target_rotation, RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
         }
+
+        public void AcceleratePhysics(GameTime game_time, Vector2 gravity)
+        {
+            Position += gravity * (float)game_time.ElapsedGameTime.TotalSeconds;
+        }
     }
 }

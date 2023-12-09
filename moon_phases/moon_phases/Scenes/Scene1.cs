@@ -32,8 +32,8 @@ namespace moon_phases.Scenes
         private static Texture2D pixel_texture;
 
         // GAME OBJECTS
-        BasicObject collision_object = new BasicObject(new Vector2(250, 250), 0.0f, collision_object_texture, Color.White, true);
-        BasicObject collectable_object = new BasicObject( new Vector2(300, 180), 0.0f, collectable_object_texture, Color.Purple, true);
+        BasicObject collision_object = new BasicObject(new Vector2(250, 460), 0.0f, collision_object_texture, Color.White, true);
+        BasicObject collectable_object = new BasicObject( new Vector2(700, 460), 0.0f, collectable_object_texture, Color.Purple, true);
 
         // PLAYER
         private static Texture2D player_texture;
@@ -67,10 +67,6 @@ namespace moon_phases.Scenes
             // SPRINT
             player.SprintSpeed = player.BaseSpeed + 128f;
 
-            // DASH
-            player.DashForce = 64f;
-            player.DashCooldown = 1f;
-
             // CAMERA
             camera = new Camera(new Vector2(0, 0), 0.0f, GraphicsDevice.Viewport, 1.25f, true);
             camera.CenterProperties = new Vector2(410, 250);
@@ -89,6 +85,7 @@ namespace moon_phases.Scenes
                 new Vector2((int)(collectable_object.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
                 (int)(collectable_object.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
+            GLobalSceneVariables.Gravity = new Vector2(0, 200.0f);
             base.Initialize();
         }
         #endregion
@@ -143,25 +140,30 @@ namespace moon_phases.Scenes
             }
 
             // PLAYER MOVEMENT
-            player.AccelerateTopDownMovement(game_time);
+            player.AccelerateMovement(game_time, GLobalSceneVariables.Gravity);
+            player.AcceleratePhysics(game_time, GLobalSceneVariables.Gravity);
 
             #region PLAYER_COLLISIONS
             // PLAYER BORDERS COLLISIONS
             if (player.Position.X > graphics.PreferredBackBufferWidth - player.Texture.Width / 2)
             {
+                player.JumpEnable = true;
                 player.Position.X = graphics.PreferredBackBufferWidth - player.Texture.Width / 2;
             }
             else if (player.Position.X < player.Texture.Width / 2)
             {
+                player.JumpEnable = true;
                 player.Position.X = player.Texture.Width / 2;
             }
 
             if (player.Position.Y > graphics.PreferredBackBufferHeight - player.Texture.Height / 2)
             {
+                player.JumpEnable = true;
                 player.Position.Y = graphics.PreferredBackBufferHeight - player.Texture.Height / 2;
             }
             else if (player.Position.Y < player.Texture.Height / 2)
             {
+                player.JumpEnable = true;
                 player.Position.Y = player.Texture.Height / 2;
             }
 

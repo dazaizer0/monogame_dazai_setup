@@ -15,5 +15,9 @@ namespace moon_phases.CGM.GameManager
     {
         public Vector2 GlobalScreenCenter;
         public Vector2 MouseClickPosition;
+
+        public static Vector2 Gravity;
     }
 }
+
+
