@@ -19,14 +19,15 @@ namespace moon_phases.CGM.GameObjects
         public Vector2 OriginalPosition;
         public Random random;
 
-        public Camera(Vector2 position, float rotation, Viewport viewport, float zoom, bool enabled) : base(position, rotation, enabled)
+        public Camera(Vector2 position, float rotation, Viewport viewport, float zoom, bool enabled) : 
+            base(position, rotation, enabled)
         {
             Viewport = viewport;
             Zoom = zoom;
             random = new Random();
         }
 
-        public void Refresh(Vector2 player_position, GameTime game_time)
+        public void Fallow(Vector2 player_position, GameTime game_time)
         {
             OriginalPosition = new Vector2(player_position.X - Viewport.Width / 2, player_position.Y - Viewport.Height / 2);
 

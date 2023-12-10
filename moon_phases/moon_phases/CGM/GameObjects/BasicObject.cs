@@ -14,7 +14,8 @@ namespace moon_phases.CGM.GameObjects
 
         public float RotationSpeed = 1f;
 
-        public BasicObject(Vector2 position, float rotation, Texture2D texture, Color object_color, bool enabled) : base(position, rotation, enabled)
+        public BasicObject(Vector2 position, float rotation, Texture2D texture, Color object_color, bool enabled) : 
+            base(position, rotation, enabled)
         {
             Texture = texture;
             ObjectColor = object_color;

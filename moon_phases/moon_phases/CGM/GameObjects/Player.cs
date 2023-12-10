@@ -22,7 +22,8 @@ namespace moon_phases.CGM.GameObjects
 
         public Vector2 MoveDirection;
 
-        public Player (Vector2 position, float rotation, Texture2D texture, float speed, Color object_color, bool enabled) : base(position, rotation, texture, object_color, enabled)
+        public Player (Vector2 position, float rotation, Texture2D texture, float speed, Color object_color, bool enabled) : 
+            base(position, rotation, texture, object_color, enabled)
         {
             BaseSpeed = speed;
             SprintSpeed = speed;
@@ -39,18 +40,6 @@ namespace moon_phases.CGM.GameObjects
         public void AccelerateMovement(GameTime game_time, Vector2 gravity)
         {
             var keyboard_state = Keyboard.GetState();
-
-            /*if (keyboard_state.IsKeyDown(Keys.W))
-            {
-                this.Position.Y -= this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
-                this.MoveDirection = new Vector2(0, -1);
-            }
-
-            if (keyboard_state.IsKeyDown(Keys.S))
-            {
-                this.Position.Y += this.Speed * (float)game_time.ElapsedGameTime.TotalSeconds;
-                this.MoveDirection = new Vector2(0, 1);
-            }*/
 
             if (keyboard_state.IsKeyDown(Keys.D))
             {

@@ -33,7 +33,7 @@ namespace moon_phases.Scenes
 
         // GAME OBJECTS
         BasicObject collision_object = new BasicObject(new Vector2(250, 460), 0.0f, collision_object_texture, Color.White, true);
-        BasicObject collectable_object = new BasicObject( new Vector2(700, 460), 0.0f, collectable_object_texture, Color.Purple, true);
+        BasicObject collectable_object = new BasicObject( new Vector2(700, 460), 0.0f, collectable_object_texture, Color.Magenta, true);
 
         // PLAYER
         private static Texture2D player_texture;
@@ -85,7 +85,9 @@ namespace moon_phases.Scenes
                 new Vector2((int)(collectable_object.Position.X / scene_properties.GridSize) * scene_properties.GridSize,
                 (int)(collectable_object.Position.Y / scene_properties.GridSize) * scene_properties.GridSize);
 
-            GLobalSceneVariables.Gravity = new Vector2(0, 200.0f);
+            // GRAVITY
+            GLobalSceneVariables.Gravity = new Vector2(0, 300.0F);
+
             base.Initialize();
         }
         #endregion
@@ -125,7 +127,7 @@ namespace moon_phases.Scenes
             mouse_coordinates_text.RefreshPosition(new Vector2(100, 100), user_interface.Position);
 
             // CAMERA
-            camera.Refresh(new Vector2(player.Position.X + camera.CenterProperties.X, player.Position.Y + camera.CenterProperties.Y), game_time);
+            camera.Fallow(new Vector2(player.Position.X + camera.CenterProperties.X, player.Position.Y + camera.CenterProperties.Y), game_time);
 
             #region PLAYER_MANAGEMENT
             // MOUSE CONTROLL
@@ -136,7 +138,7 @@ namespace moon_phases.Scenes
                 mouse_coordinates_text.Text = $"{(int)gLobal_variables.MouseClickPosition.X / scene_properties.GridSize}," +
                     $" {(int)gLobal_variables.MouseClickPosition.Y / scene_properties.GridSize}";
 
-                camera.Shake(0.04f, 6f);
+                // camera.Shake(0.04f, 6f);
             }
 
             // PLAYER MOVEMENT
@@ -161,11 +163,6 @@ namespace moon_phases.Scenes
                 player.JumpEnable = true;
                 player.Position.Y = graphics.PreferredBackBufferHeight - player.Texture.Height / 2;
             }
-            else if (player.Position.Y < player.Texture.Height / 2)
-            {
-                player.JumpEnable = true;
-                player.Position.Y = player.Texture.Height / 2;
-            }
 
             // PLAYER COLLISIONS WITH OBJECT1
             if (player.IfCollision(collision_object)) // STOP
@@ -177,13 +174,14 @@ namespace moon_phases.Scenes
             if (player.IfCollision(collectable_object)) // COLLECT
             {
                 if (collectable_object.Enabled == true)
-                    camera.Shake(0.1f, 2f); // SHAKE
+                    camera.Shake(0.1f, 8f); // SHAKE
                 collectable_object.Enabled = false;
             }
             #endregion
             #endregion
 
             collectable_object.LookAt(player.Position, game_time);
+            // collision_object.LookAt(player.Position, game_time);
 
             base.Update(game_time);
         }
@@ -193,7 +191,7 @@ namespace moon_phases.Scenes
         protected override void Draw(GameTime gameTime)
         {
             // BACKGROUND DEFAULT COLOR
-            GraphicsDevice.Clear(Color.Red);
+            GraphicsDevice.Clear(Color.Magenta);
 
             #region SPRITE_BATCH_DRAWING
             sprite_batch.Begin(transformMatrix: camera.Transform);

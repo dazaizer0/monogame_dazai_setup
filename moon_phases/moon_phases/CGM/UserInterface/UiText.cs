@@ -12,7 +12,8 @@ namespace moon_phases.CGM.UserInterface
         public Color TextColor;
         public SpriteFont Font;
 
-        public UiText(Vector2 screen_center, Vector2 position, float rotation, SpriteFont font, string text, Color textColor, bool enabled) : base(position, rotation, screen_center, enabled)
+        public UiText(Vector2 screen_center, Vector2 position, float rotation, SpriteFont font, string text, Color textColor, bool enabled) : 
+            base(position, rotation, screen_center, enabled)
         {
             Text = text;
             TextColor = textColor;
