@@ -10,6 +10,9 @@ using moon_phases.CGM.UserInterface;
 using moon_phases.CGM.GameObjects;
 using MonoGame.Extended.Timers;
 
+using LDtk;
+using LDtk.Renderer;
+
 namespace moon_phases.Scenes
 {
     public class Scene1 : Game
@@ -105,7 +108,7 @@ namespace moon_phases.Scenes
 
             // PIXEL TEXTURE
             pixel_texture = new Texture2D(GraphicsDevice, 1, 1);
-            pixel_texture.SetData(new Color[] { Color.Black });
+            pixel_texture.SetData(new Color[] { Color.White });
         }
         #endregion
 
@@ -147,18 +150,18 @@ namespace moon_phases.Scenes
 
             #region PLAYER_COLLISIONS
             // PLAYER BORDERS COLLISIONS
-            if (player.Position.X > graphics.PreferredBackBufferWidth - player.Texture.Width / 2)
+            if (player.Position.X > graphics.PreferredBackBufferWidth - player.Texture.Width / 2) // RIGHT
             {
                 player.JumpEnable = true;
                 player.Position.X = graphics.PreferredBackBufferWidth - player.Texture.Width / 2;
             }
-            else if (player.Position.X < player.Texture.Width / 2)
+            else if (player.Position.X < player.Texture.Width / 2) // LEFT
             {
                 player.JumpEnable = true;
                 player.Position.X = player.Texture.Width / 2;
             }
 
-            if (player.Position.Y > graphics.PreferredBackBufferHeight - player.Texture.Height / 2)
+            if (player.Position.Y > graphics.PreferredBackBufferHeight - player.Texture.Height / 2) // BOTTOM
             {
                 player.JumpEnable = true;
                 player.Position.Y = graphics.PreferredBackBufferHeight - player.Texture.Height / 2;
@@ -202,8 +205,14 @@ namespace moon_phases.Scenes
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)
                 {
                     // sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
-                    sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.White);
+                    sprite_batch.Draw(pixel_texture, new Rectangle(x, y, scene_properties.GridSize, scene_properties.GridSize), Color.Black);
                 }
+            }
+
+            // TEMPORARY GROUND -------------------------------------------------------------------------------------------------------------------------
+            for (int x = 0; x < scene_properties.GridSize * 32; x++)
+            {
+                sprite_batch.Draw(pixel_texture, new Rectangle(x, graphics.PreferredBackBufferHeight, scene_properties.GridSize, scene_properties.GridSize), Color.Green);
             }
             #endregion
 

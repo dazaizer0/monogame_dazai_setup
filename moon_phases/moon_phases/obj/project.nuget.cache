@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "rUNnGalN0FKZ52pGKB1zD6vaabcq3gQY7UEZr5Attpy+sdOxBXqpIufZu6tdmjQ0+F7T1aQijZPXuePvF/0oBA==",
+  "dgSpecHash": "YpjF/cxz1GfoHuyurHJj8uqXJfMWbS1nhkp5VUrNxpcTxGMa4yo7nXuEeTmWBVYThq+SdVmi1HiTsg7a73TLyQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mydat\\Documents\\_cs\\moon_phases_github\\moon_phases\\moon_phases\\moon_phases.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\mydat\\.nuget\\packages\\ldtkmonogame\\1.1.2\\ldtkmonogame.1.1.2.nupkg.sha512",
     "C:\\Users\\mydat\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
     "C:\\Users\\mydat\\.nuget\\packages\\monogame.extended\\3.8.0\\monogame.extended.3.8.0.nupkg.sha512",
     "C:\\Users\\mydat\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512",
