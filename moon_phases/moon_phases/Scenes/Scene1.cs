@@ -8,10 +8,10 @@ using moon_phases.CGM;
 using moon_phases.CGM.GameManager;
 using moon_phases.CGM.UserInterface;
 using moon_phases.CGM.GameObjects;
-using MonoGame.Extended.Timers;
 
-using LDtk;
-using LDtk.Renderer;
+using TiledSharp;
+
+using moon_phases.CGM.CGMLevel;
 
 namespace moon_phases.Scenes
 {
@@ -200,6 +200,7 @@ namespace moon_phases.Scenes
             sprite_batch.Begin(transformMatrix: camera.Transform);
 
             #region WORLD 
+
             for (int x = 0; x < scene_properties.GridSize * 32; x += scene_properties.GridSize)
             {
                 for (int y = 0; y < scene_properties.GridSize * 24; y += scene_properties.GridSize)

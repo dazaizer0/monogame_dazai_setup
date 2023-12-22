@@ -11,15 +11,12 @@ namespace moon_phases.CGM.FunctionalAdditives
     {
         public static float LerpAngle(float from, float to, float amount)
         {
-            // Normalizacja kątów do zakresu [0, 2 * Pi]
-            from = (from + MathHelper.TwoPi) % MathHelper.TwoPi;
+            from = (from + MathHelper.TwoPi) % MathHelper.TwoPi; // Normalizacja kątów do zakresu [0, 2 * Pi]
             to = (to + MathHelper.TwoPi) % MathHelper.TwoPi;
 
-            // Interpola
-            float result = from + (to - from) * amount;
+            float result = from + (to - from) * amount; // INTERPOLATION
 
-            // Ponowna normalizacja wyniku
-            result = (result + MathHelper.TwoPi) % MathHelper.TwoPi;
+            result = (result + MathHelper.TwoPi) % MathHelper.TwoPi; // NORMALIZATION
 
             return result;
         }

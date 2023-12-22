@@ -55,3 +55,6 @@ C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debu
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\MonoGame.Extended.dll
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\Content\textures\triangle.xnb
+C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\TiledSharp.dll
+C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\MonoGame.Extended.Graphics.dll
+C:\Users\mydat\Documents\_cs\moon_phases_github\moon_phases\moon_phases\bin\Debug\net6.0\MonoGame.Extended.Tiled.dll

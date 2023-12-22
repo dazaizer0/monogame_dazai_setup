@@ -8,5 +8,6 @@ namespace moon_phases.CGM.Components
 {
     internal class BasicComponent
     {
+
     }
 }

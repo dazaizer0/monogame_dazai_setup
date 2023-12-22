@@ -3,15 +3,42 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "ground.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "Ground.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "ground.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 306,
+                "y": 201.66666666666663
+            }
+        }
     },
+    "last.exportedFilePath": "C:/Users/mydat/Documents/_cs/moon_phases_github/tiled_project",
+    "last.imagePath": "C:/Users/mydat/Downloads",
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
     "openFiles": [
+        "Ground.tsx",
+        "ground.tmx"
     ],
     "project": "start_location.tiled-project",
     "recentFiles": [
-    ]
+        "Ground.tsx",
+        "ground.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
 }
